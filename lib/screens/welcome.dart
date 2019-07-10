@@ -6,6 +6,15 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+
+  String buttonText = "Get Started";
+  String _email,_password;
+  Widget Home;
+  GlobalKey<FormState> _form = GlobalKey<FormState>();
+
+  _WelcomeState() {
+    Home = welcomePage();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,38 +30,140 @@ class _WelcomeState extends State<Welcome> {
             child: null /* add child content here */,
           ),
 
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Welcome to Medic App !",
-                  softWrap: true,
+          Home,
+
+        ],
+      )
+    );
+  }
+
+  Widget welcomePage() {
+    return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Welcome to Medic App !",
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
+                  letterSpacing: 2
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.only(top: 30.0),
+            ),
+
+            Container(
+              child: RaisedButton(
+                child: Text(
+                  buttonText,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40,
-                    letterSpacing: 2
+                      fontSize: 30,
+                      color: Colors.black,
+                      letterSpacing: 2
+                  ),
+                ),
+                color: Colors.amber,
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20)
+                ),
+                elevation: 10,
+
+                onPressed: () {
+                  setState(() {
+                    buttonText = "Log In";
+                    Home = signPage();
+                  });
+                },
+              ),
+              width: 250,
+              height: 70,
+            )
+          ],
+        )
+    );
+  }
+
+  Widget signPage() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Form(
+            key: _form,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 15,right: 15),
+                  child: TextFormField(
+                    validator: (input) {
+                      if(input.isEmpty)
+                        return "Please enter the Email";
+                    },
+                    onSaved: (input) => _email = input,
+                    decoration: InputDecoration(
+                        hintText: "Enter Your Email",
+                        hintStyle: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                        labelText: "Email",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)
+                        )
+                    ),
                   ),
                 ),
 
                 Container(
-                  padding: EdgeInsets.only(top: 20.0),
+                  padding: EdgeInsets.only(top: 20),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(left: 15,right: 15),
+                  child: TextFormField(
+                    validator: (input) {
+                      if(input.length < 6)
+                        return "Please enter a password greater than 6 characters";
+                    },
+                    onSaved: (input) => _password = input,
+                    decoration: InputDecoration(
+                        hintText: "Enter Your Patient ID",
+                        hintStyle: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                        labelText: "Patient ID",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)
+                        )
+                    ),
+                    obscureText: true,
+                  ),
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(top: 20),
                 ),
 
                 Container(
                   child: RaisedButton(
                     child: Text(
-                      "Get Started",
+                      buttonText,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 30
+                          fontSize: 30,
+                          color: Colors.black,
+                          letterSpacing: 2
                       ),
                     ),
-                    color: Colors.amber,
+                    color: Colors.amberAccent[200],
                     shape: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)
+                        borderRadius: BorderRadius.circular(20)
                     ),
                     elevation: 10,
 
@@ -60,14 +171,15 @@ class _WelcomeState extends State<Welcome> {
 
                     },
                   ),
-                  width: 200,
+                  width: 250,
                   height: 70,
                 )
+
               ],
-            )
+            ),
           )
         ],
-      )
+      ),
     );
   }
 }

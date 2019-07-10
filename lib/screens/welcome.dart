@@ -26,20 +26,43 @@ class _WelcomeState extends State<Welcome> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Welcome to Medic App !"
+                  "Welcome to Medic App !",
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40,
+                    letterSpacing: 2
+                  ),
                 ),
 
                 Container(
                   padding: EdgeInsets.only(top: 20.0),
                 ),
-                RaisedButton(
-                  child: Text(
-                      "Hello World"
-                  ),
-                  onPressed: () {
 
-                  },
-                ),
+                Container(
+                  child: RaisedButton(
+                    child: Text(
+                      "Get Started",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30
+                      ),
+                    ),
+                    color: Colors.amber,
+                    shape: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    elevation: 10,
+
+                    onPressed: () {
+
+                    },
+                  ),
+                  width: 200,
+                  height: 70,
+                )
               ],
             )
           )

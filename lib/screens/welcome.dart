@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import './home_page.dart';
+import 'package:flutter/cupertino.dart';
 
 class Welcome extends StatefulWidget {
   @override
@@ -168,7 +171,7 @@ class _WelcomeState extends State<Welcome> {
                     elevation: 10,
 
                     onPressed: () {
-
+                      signinUser();
                     },
                   ),
                   width: 250,
@@ -181,5 +184,20 @@ class _WelcomeState extends State<Welcome> {
         ],
       ),
     );
+  }
+
+  Future<void> signinUser() async{
+    final formState = _form.currentState;
+    if(formState.validate()) {
+      formState.save();
+      try {
+        FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return HomePage(user);
+        }));
+      } catch(e) {
+        print(e);
+      }
+    }
   }
 }

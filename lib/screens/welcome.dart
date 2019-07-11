@@ -23,15 +23,15 @@ class _WelcomeState extends State<Welcome> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/welcome_image.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: null /* add child content here */,
-          ),
+//          Container(
+//            decoration: BoxDecoration(
+//              image: DecorationImage(
+//                image: AssetImage("assets/images/welcome_image.png"),
+//                fit: BoxFit.cover,
+//              ),
+//            ),
+//            child: null /* add child content here */,
+//          ),
 
           Home,
 
@@ -50,7 +50,7 @@ class _WelcomeState extends State<Welcome> {
               softWrap: true,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
                   letterSpacing: 2
@@ -95,15 +95,21 @@ class _WelcomeState extends State<Welcome> {
 
   Widget signPage() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: ListView(
+        padding: EdgeInsets.only(top: 30),
+//        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Form(
             key: _form,
             child: Column(
               children: <Widget>[
+
+                Image(
+                  image: AssetImage('assets/images/medic.png'),
+                ),
+
                 Container(
-                  padding: EdgeInsets.only(left: 15,right: 15),
+                  padding: EdgeInsets.only(left: 15,right: 15,top: 10),
                   child: TextFormField(
                     validator: (input) {
                       if(input.isEmpty)

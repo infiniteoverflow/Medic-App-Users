@@ -123,7 +123,7 @@ class _WelcomeState extends State<Welcome> {
                         ),
                         labelText: "Email",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)
+                            borderRadius: BorderRadius.circular(30)
                         )
                     ),
                   ),
@@ -148,7 +148,7 @@ class _WelcomeState extends State<Welcome> {
                         ),
                         labelText: "Patient ID",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)
+                            borderRadius: BorderRadius.circular(30)
                         )
                     ),
                     obscureText: true,
@@ -165,14 +165,14 @@ class _WelcomeState extends State<Welcome> {
                       buttonText,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 25,
                           color: Colors.black,
                           letterSpacing: 2
                       ),
                     ),
                     color: Colors.amberAccent[200],
                     shape: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)
+                        borderRadius: BorderRadius.circular(30)
                     ),
                     elevation: 10,
 
@@ -180,8 +180,24 @@ class _WelcomeState extends State<Welcome> {
                       signinUser();
                     },
                   ),
-                  width: 250,
-                  height: 70,
+                  width: 350,
+                  height: 50,
+                ),
+
+                Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: GestureDetector(
+                    child: Text(
+                      "Forgot Email or Id?",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 25
+                      ),
+                    ),
+                    onTap: () {
+                      print("pressed");
+                    },
+                  ),
                 )
 
               ],

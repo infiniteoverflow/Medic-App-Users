@@ -26,14 +26,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> Welcome()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> Welcome()));
   }
 
   @override
   void initState() {
     globalBloc = GlobalBloc();
     super.initState();
-    startTime();
+    //startTime();
   }
 
   @override
@@ -42,9 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
       value: globalBloc,
       child: MaterialApp(
         home: Scaffold(
-          body: Center(
-            child: Image.asset('assets/images/splash_image.png',fit: BoxFit.cover,),
-          ),
+          body: Welcome()
         ),
       ),
     );

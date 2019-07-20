@@ -1,4 +1,4 @@
-name: medic_app_users
+name: medicine_reminder
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -28,11 +28,10 @@ dependencies:
   shared_preferences: 0.5.2
   flutter_local_notifications:
   flare_flutter:
-    git:
+    git: 
       url: git://github.com/2d-inc/Flare-Flutter.git
       ref: dev
       path: flare_flutter
-  firebase_auth: ^0.11.1+11
 
 dev_dependencies:
   flutter_test:
@@ -40,10 +39,10 @@ dev_dependencies:
   flutter_launcher_icons: "^0.7.2"
 
 flutter_icons:
-  android: "launcher_icon"
+  android: "launcher_icon" 
   ios: false
   image_path: "assets/logo/Mediminder_Logo.png"
-
+    
 
 
 
@@ -60,8 +59,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/animations/
-  - assets/sound/
+    - assets/animations/
+    - assets/sound/
+    - assets/images/splash_image.png
+    - assets/images/medic.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -75,14 +76,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-  - family: Ic
-    fonts:
-    - asset: assets/fonts/ic/ic_medicine.ttf
-  - family: Angel
-    fonts:
-    - asset: assets/fonts/neu/Angel Signature.ttf
-
-
+    - family: Ic
+      fonts:
+        - asset: assets/fonts/ic/ic_medicine.ttf
+    - family: Angel
+      fonts:
+        - asset: assets/fonts/neu/Angel Signature.ttf    
+        
+        
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

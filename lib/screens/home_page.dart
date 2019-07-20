@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medic_app_users/Models/global_bloc.dart';
 import 'package:medic_app_users/Models/medicines.dart';
-import 'package:medicine_reminder/src/ui/medicine_details/medicine_details.dart';
+import 'package:medic_app_users/screens/medicine_details.dart';
 import 'package:medicine_reminder/src/ui/new_entry/new_entry.dart';
 import 'package:provider/provider.dart';
 

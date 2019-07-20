@@ -5,9 +5,9 @@ import 'package:medic_app_users/Models/global_bloc.dart';
 import 'package:medic_app_users/Models/errors.dart';
 import 'package:medic_app_users/Models/medicines.dart';
 import 'package:medic_app_users/Models/medicine_type.dart';
-import 'package:medicine_reminder/src/ui/homepage/homepage.dart';
-import 'package:medicine_reminder/src/ui/new_entry/new_entry_bloc.dart';
-import 'package:medicine_reminder/src/ui/success_screen/success_screen.dart';
+import 'package:medic_app_users/screens/home_page.dart';
+import 'package:medic_app_users/Models/new_entry_bloc.dart';
+import 'package:medic_app_users/screens/success_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

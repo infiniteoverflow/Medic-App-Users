@@ -215,7 +215,7 @@ class _WelcomeState extends State<Welcome> {
       try {
         FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HomePage(user);
+          return HomePage();
         }));
       } catch(e) {
         print(e);

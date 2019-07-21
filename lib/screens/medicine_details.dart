@@ -34,14 +34,14 @@ class MedicineDetails extends StatelessWidget {
       body: Container(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            //crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               MainSection(medicine: medicine),
               SizedBox(
                 height: 15,
               ),
-              ExtendedSection(medicine: medicine),
+              //ExtendedSection(medicine: medicine),
               Padding(
                 padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.height * 0.06,
@@ -233,34 +233,65 @@ class MainSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: <Widget>[
-          makeIcon(175),
-          SizedBox(
-            width: 15,
-          ),
-          Column(
-            children: <Widget>[
-              Hero(
-                tag: medicine.medicineName,
-                child: Material(
-                  color: Colors.transparent,
-                  child: MainInfoTab(
-                    fieldTitle: "Medicine Name",
-                    fieldInfo: medicine.medicineName,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: <Widget>[
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: <Widget>[
+                  makeIcon(175),
+                  SizedBox(
+                    width: 15,
                   ),
-                ),
+                  Column(
+                    children: <Widget>[
+                      Hero(
+                        tag: medicine.medicineName,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: MainInfoTab(
+                            fieldTitle: "Medicine Name",
+                            fieldInfo: medicine.medicineName,
+                          ),
+                        ),
+                      ),
+                      MainInfoTab(
+                        fieldTitle: "Dosage",
+                        fieldInfo: medicine.dosage == 0
+                            ? "Not Specified"
+                            : medicine.dosage.toString() + " mg",
+                      )
+                    ],
+                  )
+                ],
               ),
-              MainInfoTab(
-                fieldTitle: "Dosage",
-                fieldInfo: medicine.dosage == 0
-                    ? "Not Specified"
-                    : medicine.dosage.toString() + " mg",
-              )
-            ],
-          )
-        ],
-      ),
+            ),
+
+            ExtendedInfoTab(
+              fieldTitle: "Medicine Type",
+              fieldInfo: medicine.medicineType == "None"
+                  ? "Not Specified"
+                  : medicine.medicineType,
+            ),
+            ExtendedInfoTab(
+              fieldTitle: "Dose Interval",
+              fieldInfo: "Every " +
+                  medicine.interval.toString() +
+                  " hours  | " +
+                  " ${medicine.interval == 24 ? "One time a day" : (24 / medicine.interval).floor().toString() + " times a day"}",
+            ),
+            ExtendedInfoTab(
+                fieldTitle: "Start Time",
+                fieldInfo: medicine.startTime[0] +
+                    medicine.startTime[1] +
+                    ":" +
+                    medicine.startTime[2] +
+                    medicine.startTime[3]),
+          ],
+        ),
+      )
     );
   }
 }
@@ -301,42 +332,6 @@ class MainInfoTab extends StatelessWidget {
   }
 }
 
-class ExtendedSection extends StatelessWidget {
-  final Medicine medicine;
-
-  ExtendedSection({Key key, @required this.medicine}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          ExtendedInfoTab(
-            fieldTitle: "Medicine Type",
-            fieldInfo: medicine.medicineType == "None"
-                ? "Not Specified"
-                : medicine.medicineType,
-          ),
-          ExtendedInfoTab(
-            fieldTitle: "Dose Interval",
-            fieldInfo: "Every " +
-                medicine.interval.toString() +
-                " hours  | " +
-                " ${medicine.interval == 24 ? "One time a day" : (24 / medicine.interval).floor().toString() + " times a day"}",
-          ),
-          ExtendedInfoTab(
-              fieldTitle: "Start Time",
-              fieldInfo: medicine.startTime[0] +
-                  medicine.startTime[1] +
-                  ":" +
-                  medicine.startTime[2] +
-                  medicine.startTime[3]),
-        ],
-      ),
-    );
-  }
-}
 
 class ExtendedInfoTab extends StatelessWidget {
   final String fieldTitle;

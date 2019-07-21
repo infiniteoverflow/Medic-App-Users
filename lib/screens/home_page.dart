@@ -27,13 +27,11 @@ class _HomePageState extends State<HomePage> {
         color: Color(0xFFF6F8FC),
         child: Column(
           children: <Widget>[
-            Flexible(
-              flex: 3,
-              child: TopContainer(),
-            ),
+            TopContainer(),
             SizedBox(
               height: 10,
             ),
+
             Flexible(
               flex: 7,
               child: Provider<GlobalBloc>.value(
@@ -82,7 +80,7 @@ class TopContainer extends StatelessWidget {
         ],
         color: Color(0xFF3EB16F),
       ),
-      width: double.infinity,
+      //width: double.infinity,
       child: Column(
         children: <Widget>[
           Padding(

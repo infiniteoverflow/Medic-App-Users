@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
             ),
 
             Flexible(
-              flex: 7,
+              flex: 1,
               child: Provider<GlobalBloc>.value(
                 child: BottomContainer(),
                 value: _globalBloc,
@@ -83,19 +83,6 @@ class TopContainer extends StatelessWidget {
       //width: double.infinity,
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 10,
-            ),
-            child: Text(
-              "MedicApp",
-              style: TextStyle(
-                fontFamily: "Angel",
-                fontSize: 64,
-                color: Colors.white,
-              ),
-            ),
-          ),
           Divider(
             color: Color(0xFFB0F3CB),
           ),

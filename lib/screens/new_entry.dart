@@ -314,7 +314,7 @@ class _NewEntryState extends State<NewEntry> {
 
   initializeNotifications() async {
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/launcher_icon.png');
+    AndroidInitializationSettings('@drawable/ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings();
     var initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);

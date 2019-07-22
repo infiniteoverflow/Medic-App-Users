@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medic_app_users/common/convert_time.dart';
 import 'package:medic_app_users/Models/global_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:medic_app_users/Models/medicine_type.dart';
 import 'package:medic_app_users/screens/home_page.dart';
 import 'package:medic_app_users/Models/new_entry_bloc.dart';
 import 'package:medic_app_users/screens/success_screen.dart';
+import 'package:medic_app_users/screens/welcome.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -237,6 +239,7 @@ class _NewEntryState extends State<NewEntry> {
                           .map((i) => i.toString())
                           .toList(); //for Shared preference
 
+                      // check here
                       Medicine newEntryMedicine = Medicine(
                         notificationIDs: notificationIDs,
                         medicineName: medicineName,
@@ -326,10 +329,21 @@ class _NewEntryState extends State<NewEntry> {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
     }
-    await Navigator.push(
-      context,
-      new MaterialPageRoute(builder: (context) => HomePage()),
+
+    FutureBuilder<FirebaseUser>(
+        future: FirebaseAuth.instance.currentUser(),
+        builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+          if (snapshot.hasData){
+            FirebaseUser user = snapshot.data; // this is your user instance
+            /// is because there is user already logged
+            return HomePage(user);
+          }
+          /// other way there is no user logged.
+          return Welcome();
+        }
     );
+
+
   }
 
   Future<void> scheduleNotification(Medicine medicine) async {

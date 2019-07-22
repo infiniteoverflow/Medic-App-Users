@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:medic_app_users/Models/global_bloc.dart';
 import 'package:medic_app_users/Models/medicines.dart';
 import 'package:medic_app_users/screens/medicine_details.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
 import 'package:provider/provider.dart';
 
+
 class HomePage extends StatefulWidget {
+
+  FirebaseUser user;
+
+  HomePage(this.user);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  DatabaseReference reference;
+  String name;
   void initState() {
     super.initState();
+    reference = database.reference().child("Patients").child(widget.user.uid);
+    print(widget.user.uid);
+    name = reference.child("name").toString();
+    
+    print(widget.user.uid +" 4");
+
+//    reference.once().then((DataSnapshot snapshot){
+//      print(snapshot.value["firstname"]);
+//    });
+
   }
 
   @override
@@ -22,6 +43,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Color(0xFF3EB16F),
         elevation: 0.0,
+        title: Text(
+          " "
+        ),
       ),
       body: Container(
         color: Color(0xFFF6F8FC),
@@ -32,13 +56,7 @@ class _HomePageState extends State<HomePage> {
               height: 10,
             ),
 
-            Flexible(
-              flex: 1,
-              child: Provider<GlobalBloc>.value(
-                child: BottomContainer(),
-                value: _globalBloc,
-              ),
-            ),
+            BottomContainer()
           ],
         ),
       ),
@@ -123,45 +141,45 @@ class TopContainer extends StatelessWidget {
   }
 }
 
+
+//else if (snapshot.data.length == 0) {
+//return Container(
+//color: Color(0xFFF6F8FC),
+//child: Center(
+//child: Text(
+//"Press + to add a Mediminder",
+//textAlign: TextAlign.center,
+//style: TextStyle(
+//fontSize: 24,
+//color: Color(0xFFC9C9C9),
+//fontWeight: FontWeight.bold),
+//),
+//),
+//);
+//}
+
+
+
+//else {
+//return Container(
+//color: Color(0xFFF6F8FC),
+//child: GridView.builder(
+//padding: EdgeInsets.only(top: 12),
+//gridDelegate:
+//SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+//itemCount: snapshot.data.length,
+//itemBuilder: (context, index) {
+//return MedicineCard(snapshot.data[index]);
+//},
+//),
+//);
+//}
+
 class BottomContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
-    return StreamBuilder<List<Medicine>>(
-      stream: _globalBloc.medicineList$,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Container();
-        } else if (snapshot.data.length == 0) {
-          return Container(
-            color: Color(0xFFF6F8FC),
-            child: Center(
-              child: Text(
-                "Press + to add a Mediminder",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Color(0xFFC9C9C9),
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          );
-        } else {
-          return Container(
-            color: Color(0xFFF6F8FC),
-            child: GridView.builder(
-              padding: EdgeInsets.only(top: 12),
-              gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                return MedicineCard(snapshot.data[index]);
-              },
-            ),
-          );
-        }
-      },
-    );
+
+    return Container();
   }
 }
 

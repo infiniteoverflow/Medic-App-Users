@@ -116,38 +116,41 @@ class _NewEntryState extends State<NewEntry> {
                 child: StreamBuilder<MedicineType>(
                   stream: _newEntryBloc.selectedMedicineType,
                   builder: (context, snapshot) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        MedicineTypeColumn(
-                            type: MedicineType.Bottle,
-                            name: "Bottle",
-                            iconValue: 0xe900,
-                            isSelected: snapshot.data == MedicineType.Bottle
-                                ? true
-                                : false),
-                        MedicineTypeColumn(
-                            type: MedicineType.Pill,
-                            name: "Pill",
-                            iconValue: 0xe901,
-                            isSelected: snapshot.data == MedicineType.Pill
-                                ? true
-                                : false),
-                        MedicineTypeColumn(
-                            type: MedicineType.Syringe,
-                            name: "Syringe",
-                            iconValue: 0xe902,
-                            isSelected: snapshot.data == MedicineType.Syringe
-                                ? true
-                                : false),
-                        MedicineTypeColumn(
-                            type: MedicineType.Tablet,
-                            name: "Tablet",
-                            iconValue: 0xe903,
-                            isSelected: snapshot.data == MedicineType.Tablet
-                                ? true
-                                : false),
-                      ],
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          MedicineTypeColumn(
+                              type: MedicineType.Bottle,
+                              name: "Bottle",
+                              iconValue: 0xe900,
+                              isSelected: snapshot.data == MedicineType.Bottle
+                                  ? true
+                                  : false),
+                          MedicineTypeColumn(
+                              type: MedicineType.Pill,
+                              name: "Pill",
+                              iconValue: 0xe901,
+                              isSelected: snapshot.data == MedicineType.Pill
+                                  ? true
+                                  : false),
+                          MedicineTypeColumn(
+                              type: MedicineType.Syringe,
+                              name: "Syringe",
+                              iconValue: 0xe902,
+                              isSelected: snapshot.data == MedicineType.Syringe
+                                  ? true
+                                  : false),
+                          MedicineTypeColumn(
+                              type: MedicineType.Tablet,
+                              name: "Tablet",
+                              iconValue: 0xe903,
+                              isSelected: snapshot.data == MedicineType.Tablet
+                                  ? true
+                                  : false),
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -311,7 +314,7 @@ class _NewEntryState extends State<NewEntry> {
 
   initializeNotifications() async {
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/launcher_icon');
+    AndroidInitializationSettings('@mipmap/launcher_icon.png');
     var initializationSettingsIOS = IOSInitializationSettings();
     var initializationSettings = InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -339,7 +342,7 @@ class _NewEntryState extends State<NewEntry> {
       'repeatDailyAtTime channel name',
       'repeatDailyAtTime description',
       importance: Importance.Max,
-      sound: 'sound',
+      sound: 'sound.mp3',
       ledColor: Color(0xFF3EB16F),
       ledOffMs: 1000,
       ledOnMs: 1000,
@@ -376,6 +379,8 @@ class IntervalSelection extends StatefulWidget {
 
 class _IntervalSelectionState extends State<IntervalSelection> {
   var _intervals = [
+    2,
+    4,
     6,
     8,
     12,
@@ -389,60 +394,63 @@ class _IntervalSelectionState extends State<IntervalSelection> {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Remind me every  ",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            DropdownButton<int>(
-              iconEnabledColor: Color(0xFF3EB16F),
-              hint: _selected == 0
-                  ? Text(
-                "Select an Interval",
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Remind me every  ",
                 style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400),
-              )
-                  : null,
-              elevation: 4,
-              value: _selected == 0 ? null : _selected,
-              items: _intervals.map((int value) {
-                return DropdownMenuItem<int>(
-                  value: value,
-                  child: Text(
-                    value.toString(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (newVal) {
-                setState(() {
-                  _selected = newVal;
-                  _newEntryBloc.updateInterval(newVal);
-                });
-              },
-            ),
-            Text(
-              _selected == 1 ? " hour" : " hours",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-          ],
-        ),
+              DropdownButton<int>(
+                iconEnabledColor: Color(0xFF3EB16F),
+                hint: _selected == 0
+                    ? Text(
+                  "Select an Interval",
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400),
+                )
+                    : null,
+                elevation: 4,
+                value: _selected == 0 ? null : _selected,
+                items: _intervals.map((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text(
+                      value.toString(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (newVal) {
+                  setState(() {
+                    _selected = newVal;
+                    _newEntryBloc.updateInterval(newVal);
+                  });
+                },
+              ),
+              Text(
+                _selected == 1 ? " hour" : " hours",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        )
       ),
     );
   }

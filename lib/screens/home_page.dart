@@ -6,6 +6,7 @@ import 'package:medic_app_users/Models/medicines.dart';
 import 'package:medic_app_users/screens/medicine_details.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 
 
 class HomePage extends StatefulWidget {
@@ -19,26 +20,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  FirebaseDatabase database = FirebaseDatabase.instance;
+  FirebaseDatabase database;
   DatabaseReference reference;
-  String name;
-  void initState() {
-    super.initState();
-    reference = database.reference().child("Patients").child(widget.user.uid);
-    print(widget.user.uid);
-    name = reference.child("name").toString();
-    
-    print(widget.user.uid +" 4");
+//  String name;
 
-//    reference.once().then((DataSnapshot snapshot){
-//      print(snapshot.value["firstname"]);
-//    });
+  void initState() {
+    //super.initState();
+    //database.goOnline();
+    database = FirebaseDatabase(databaseURL: "https://medic-app-10dde.firebaseio.com/");
+    reference = database.reference().child("Patients").child(widget.user.uid);
+
+
+    reference.once().then((DataSnapshot snapshot){
+      print(snapshot.value["firstname"]);
+    });
 
   }
 
   @override
   Widget build(BuildContext context) {
-    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF3EB16F),
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NewEntry(),
+              builder: (context) => NewEntry(widget.user),
             ),
           );
         },

@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:medic_app_users/Models/mediminders.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:medic_app_users/common/convert_time.dart';
 import 'package:medic_app_users/Models/global_bloc.dart';
 import 'package:medic_app_users/Models/errors.dart';
@@ -14,6 +16,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NewEntry extends StatefulWidget {
+
+  FirebaseUser user;
+
+  NewEntry(this.user);
+
   @override
   _NewEntryState createState() => _NewEntryState();
 }
@@ -25,6 +32,11 @@ class _NewEntryState extends State<NewEntry> {
   NewEntryBloc _newEntryBloc;
 
   GlobalKey<ScaffoldState> _scaffoldKey;
+
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  DatabaseReference reference;
+
+  Mediminders mediminder;
 
   void dispose() {
     super.dispose();
@@ -42,6 +54,14 @@ class _NewEntryState extends State<NewEntry> {
     _scaffoldKey = GlobalKey<ScaffoldState>();
     initializeNotifications();
     initializeErrorListen();
+
+    mediminder = Mediminders(
+      medicineName: " ",
+      dosage: " ",
+      interval: " ",
+      startTime: " ",
+      type: " "
+    );
   }
 
   @override
@@ -233,24 +253,17 @@ class _NewEntryState extends State<NewEntry> {
                       int interval = _newEntryBloc.selectedInterval$.value;
                       String startTime = _newEntryBloc.selectedTimeOfDay$.value;
 
-                      List<int> intIDs =
-                      makeIDs(24 / _newEntryBloc.selectedInterval$.value);
-                      List<String> notificationIDs = intIDs
-                          .map((i) => i.toString())
-                          .toList(); //for Shared preference
+                      reference = database.reference().child("Patients").child(widget.user.uid);
 
-                      // check here
-                      Medicine newEntryMedicine = Medicine(
-                        notificationIDs: notificationIDs,
-                        medicineName: medicineName,
-                        dosage: dosage,
-                        medicineType: medicineType,
-                        interval: interval,
-                        startTime: startTime,
-                      );
+                      mediminder.medicineName = medicineName;
+                      mediminder.dosage = dosageController.text;
+                      mediminder.type = medicineType;
+                      mediminder.interval = interval.toString();
+                      mediminder.startTime = startTime;
 
-                      _globalBloc.updateMedicineList(newEntryMedicine);
-                      scheduleNotification(newEntryMedicine);
+
+                      reference.push().set(mediminder.toJson());
+
 
                       Navigator.pushReplacement(
                         context,

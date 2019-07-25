@@ -19,20 +19,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  FirebaseDatabase database;
+  FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference reference;
 //  String name;
 
   void initState() {
-    //super.initState();
-    //database.goOnline();
-    database = FirebaseDatabase(databaseURL: "https://medic-app-10dde.firebaseio.com/");
+    super.initState();
     reference = database.reference().child("Patients").child(widget.user.uid);
-
-
-    reference.once().then((DataSnapshot snapshot){
-      print(snapshot.value["firstname"]);
-    });
 
   }
 
@@ -467,3 +460,6 @@ class BottomContainer extends StatelessWidget {
 //         });
 //   }
 // }
+
+
+

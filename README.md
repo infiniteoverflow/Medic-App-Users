@@ -1,6 +1,6 @@
 # medic_app_users
 
-A new Flutter application.
+A new Flutter application which can be used by the Patients admitted to a hospital. 
 
 ## Getting Started
 

@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 import 'screens/welcome.dart';
 
-import 'package:medic_app_users/Models/global_bloc.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(SplashScreen());
+  runApp(
+    MaterialApp(
+      home: SplashScreen(),
+    )
+  );
 }
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +20,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  GlobalBloc globalBloc;
+  //GlobalBloc globalBloc;
 
   startTime() async {
     var _duration = new Duration(seconds: 2);
@@ -31,19 +33,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    globalBloc = GlobalBloc();
     super.initState();
     //startTime();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<GlobalBloc>.value(
-      value: globalBloc,
-      child: MaterialApp(
-        home: Scaffold(
-          body: Welcome()
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/splash_image.png"),
+            fit: BoxFit.cover,
+          ),
         ),
+        child: null /* add child content here */,
       ),
     );
   }

@@ -3,8 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:medic_app_users/Models/medicines.dart';
 import 'package:provider/provider.dart';
 
-import 'package:medic_app_users/Models/global_bloc.dart';
-
 class MedicineDetails extends StatelessWidget {
   final Medicine medicine;
 
@@ -12,7 +10,7 @@ class MedicineDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
+    //final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
@@ -55,7 +53,7 @@ class MedicineDetails extends StatelessWidget {
                     color: Color(0xFF3EB16F),
                     shape: StadiumBorder(),
                     onPressed: () {
-                      openAlertBox(context, _globalBloc);
+                      openAlertBox(context);
                     },
                     child: Center(
                       child: Text(
@@ -77,7 +75,7 @@ class MedicineDetails extends StatelessWidget {
     );
   }
 
-  openAlertBox(BuildContext context, GlobalBloc _globalBloc) {
+  openAlertBox(BuildContext context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -111,7 +109,7 @@ class MedicineDetails extends StatelessWidget {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                          _globalBloc.removeMedicine(medicine);
+                          //_globalBloc.removeMedicine(medicine);
                           Navigator.popUntil(
                             context,
                             ModalRoute.withName('/'),

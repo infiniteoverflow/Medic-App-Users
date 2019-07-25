@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:medic_app_users/Models/mediminders.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:medic_app_users/common/convert_time.dart';
-import 'package:medic_app_users/Models/global_bloc.dart';
 import 'package:medic_app_users/Models/errors.dart';
 import 'package:medic_app_users/Models/medicines.dart';
 import 'package:medic_app_users/Models/medicine_type.dart';
@@ -66,7 +65,7 @@ class _NewEntryState extends State<NewEntry> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
+    //final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -231,12 +230,12 @@ class _NewEntryState extends State<NewEntry> {
                       if (dosageController.text != "") {
                         dosage = int.parse(dosageController.text);
                       }
-                      for (var medicine in _globalBloc.medicineList$.value) {
-                        if (medicineName == medicine.medicineName) {
-                          _newEntryBloc.submitError(EntryError.NameDuplicate);
-                          return;
-                        }
-                      }
+//                      for (var medicine in _globalBloc.medicineList$.value) {
+//                        if (medicineName == medicine.medicineName) {
+//                          _newEntryBloc.submitError(EntryError.NameDuplicate);
+//                          return;
+//                        }
+//                      }
                       if (_newEntryBloc.selectedInterval$.value == 0) {
                         _newEntryBloc.submitError(EntryError.Interval);
                         return;

@@ -77,7 +77,14 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ],
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

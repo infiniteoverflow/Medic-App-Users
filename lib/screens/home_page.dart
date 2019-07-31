@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:medic_app_users/Models/medicines.dart';
+import 'package:medic_app_users/Models/mediminders.dart';
 import 'package:medic_app_users/screens/medicine_details.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -34,167 +36,51 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF3EB16F),
-        elevation: 0.0,
         title: Text(
-          " "
+          "Medic App"
         ),
       ),
-      body: Container(
-        color: Color(0xFFF6F8FC),
-        child: Column(
-          children: <Widget>[
-            TopContainer(),
-            SizedBox(
-              height: 10,
-            ),
 
-            firebaseAnimatedList()
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 4,
-        backgroundColor: Color(0xFF3EB16F),
-        child: Icon(
-          Icons.add,
-        ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NewEntry(widget.user),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget firebaseAnimatedList() {
-    return FirebaseAnimatedList(
-        query: reference.child("Mediminders"),
-        itemBuilder: (_,DataSnapshot snapshot,Animation<double> animation,int index) {
-          return Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text.rich(
-                      TextSpan(
-                          children: <TextSpan>[
-
-                            TextSpan(
-                                text: medicinesList[index].name,
-                                style: TextStyle(
-                                    color: Colors.amber,
-                                    fontSize: 30
-                                )
-                            )
-                          ]
-                      )
-                  ),
-
-                  Container(
-                    padding: EdgeInsets.all(5),
-                  ),
-
-                  Text(
-                      medicinesList[index].startDate
-                  ),
-
-                  Container(
-                    padding: EdgeInsets.all(5),
-                  ),
-
-                  Text(
-                      medicinesList[index].endDate
-                  ),
-
-                  Container(
-                    padding: EdgeInsets.all(5),
-                  ),
-
-                  Text(
-                      medicinesList[index].dailyDose.toString()
-                  ),
-
-                  Container(
-                    padding: EdgeInsets.all(5),
-                  ),
-
-                  Text(
-                      medicinesList[index].note
-                  )
-                ],
-              )
-          );
-        }
-    );
-  }
-}
-
-class TopContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    //final GlobalBloc globalBloc = Provider.of<GlobalBloc>(context);
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.elliptical(50, 27),
-          bottomRight: Radius.elliptical(50, 27),
-        ),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5,
-            color: Colors.grey[400],
-            offset: Offset(0, 3.5),
-          )
-        ],
-        color: Color(0xFF3EB16F),
-      ),
-      //width: double.infinity,
-      child: Column(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Divider(
-            color: Color(0xFFB0F3CB),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 12.0),
-            child: Center(
-              child: Text(
-                "Number of Mediminders",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.white,
-                ),
-              ),
+          Expanded(
+            child: FirebaseAnimatedList(
+                query: reference.child("Mediminders"),
+                itemBuilder:  (_, DataSnapshot snapshot,
+                    Animation<double> animation, int index) {
+                  print(snapshot.value);
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        snapshot.value['mediname']
+                      ),
+                      subtitle: Column(
+                        children: <Widget>[
+                          Text(
+                            snapshot.value['starttime']
+                          ),
+                          Text(
+                              snapshot.value['dosage']
+                          ),
+                          Text(
+                              snapshot.value['interval']
+                          ),
+                          Text(
+                            snapshot.value['type']
+                          )
+                        ],
+                      )
+                    ),
+                  );
+                }
             ),
           ),
-//          StreamBuilder<List<Medicine>>(
-//            stream: globalBloc.medicineList$,
-//            builder: (context, snapshot) {
-//              return Padding(
-//                padding: EdgeInsets.only(top: 16.0, bottom: 5 ),
-//                child: Center(
-//                  child: Text(
-//                    !snapshot.hasData ? '0' : snapshot.data.length.toString(),
-//                    style: TextStyle(
-//                      fontFamily: "Neu",
-//                      fontSize: 28,
-//                      fontWeight: FontWeight.bold,
-//                      color: Colors.white,
-//                    ),
-//                  ),
-//                ),
-//              );
-//            },
-//          ),
         ],
-      ),
+      )
     );
   }
 }
-
 
 //else if (snapshot.data.length == 0) {
 //return Container(
@@ -229,20 +115,6 @@ class TopContainer extends StatelessWidget {
 //);
 //}
 
-class BottomContainer extends StatelessWidget {
-
-  static FirebaseDatabase database = FirebaseDatabase.instance;
-  DatabaseReference reference = database.reference().child("Patients").child();
-
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Container();
-  }
-
-  
-}
 
 //class MedicineCard extends StatelessWidget {
 //  final Medicine medicine;

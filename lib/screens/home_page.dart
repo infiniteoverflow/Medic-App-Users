@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               height: 10,
             ),
 
-            BottomContainer()
+            firebaseAnimatedList()
           ],
         ),
       ),
@@ -68,6 +68,67 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
+    );
+  }
+
+  Widget firebaseAnimatedList() {
+    return FirebaseAnimatedList(
+        query: reference.child("Mediminders"),
+        itemBuilder: (_,DataSnapshot snapshot,Animation<double> animation,int index) {
+          return Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text.rich(
+                      TextSpan(
+                          children: <TextSpan>[
+
+                            TextSpan(
+                                text: medicinesList[index].name,
+                                style: TextStyle(
+                                    color: Colors.amber,
+                                    fontSize: 30
+                                )
+                            )
+                          ]
+                      )
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.all(5),
+                  ),
+
+                  Text(
+                      medicinesList[index].startDate
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.all(5),
+                  ),
+
+                  Text(
+                      medicinesList[index].endDate
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.all(5),
+                  ),
+
+                  Text(
+                      medicinesList[index].dailyDose.toString()
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.all(5),
+                  ),
+
+                  Text(
+                      medicinesList[index].note
+                  )
+                ],
+              )
+          );
+        }
     );
   }
 }
@@ -169,11 +230,18 @@ class TopContainer extends StatelessWidget {
 //}
 
 class BottomContainer extends StatelessWidget {
+
+  static FirebaseDatabase database = FirebaseDatabase.instance;
+  DatabaseReference reference = database.reference().child("Patients").child();
+
+
   @override
   Widget build(BuildContext context) {
 
     return Container();
   }
+
+  
 }
 
 //class MedicineCard extends StatelessWidget {
@@ -461,6 +529,8 @@ class BottomContainer extends StatelessWidget {
 //         });
 //   }
 // }
+
+
 
 
 

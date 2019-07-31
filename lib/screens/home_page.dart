@@ -21,7 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference reference;
-//  String name;
+
+  //  String name;
 
   void initState() {
     super.initState();

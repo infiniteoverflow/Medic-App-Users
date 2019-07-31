@@ -32,7 +32,7 @@ dependencies:
       ref: dev
       path: flare_flutter
   firebase_auth: ^0.11.1+11
-  firebase_database: ^3.0.3
+  firebase_database: ^3.0.5
   firebase_core: any
 
 dev_dependencies:

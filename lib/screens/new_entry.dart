@@ -252,7 +252,9 @@ class _NewEntryState extends State<NewEntry> {
                       int interval = _newEntryBloc.selectedInterval$.value;
                       String startTime = _newEntryBloc.selectedTimeOfDay$.value;
 
-                      reference = database.reference().child("Doctors").child("DpuRfMhnChXwFQyLyDYE8OwDXlM2");
+                      reference = database.reference().child("Patients")
+                          .child(widget.user.uid)
+                          .child("Mediminders");
 
                       mediminder.medicineName = medicineName;
                       mediminder.dosage = dosageController.text;
@@ -261,14 +263,14 @@ class _NewEntryState extends State<NewEntry> {
                       mediminder.startTime = startTime;
 
 
-                      reference.set(mediminder.toJson());
+                      reference.push().set(mediminder.toJson());
 
 
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return SuccessScreen();
+                            return HomePage(widget.user);
                           },
                         ),
                       );

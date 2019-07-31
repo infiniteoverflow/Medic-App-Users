@@ -24,12 +24,17 @@ class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference reference;
 
+  Widget Home;
+
+  int bottomBarIndex = 0;
+  String title = "Mediminders";
+
   //  String name;
 
   void initState() {
     super.initState();
     reference = database.reference().child("Patients").child(widget.user.uid);
-
+    Home = mediminder();
   }
 
   @override
@@ -37,28 +42,77 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Medic App"
+          title
         ),
       ),
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Expanded(
-            child: FirebaseAnimatedList(
-                query: reference.child("Mediminders"),
-                itemBuilder:  (_, DataSnapshot snapshot,
-                    Animation<double> animation, int index) {
-                  print(snapshot.value);
-                  return Card(
-                    child: ListTile(
+      body: Home,
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: bottomBarIndex,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.access_alarms),
+            title: Text(
+              "Mediminders"
+            ),
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.details),
+            title: Text(
+              "Visit Details"
+            ),
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            title: Text(
+              "Notifications"
+            )
+          )
+        ],
+        onTap: (int index) {
+          setState(() {
+            bottomBarIndex = index;
+
+            switch(index) {
+              case 0: Home = mediminder();
+                      title = "Mediminders";
+                      break;
+
+              case 1: Home = visitDetails();
+                      title = "Visit Details";
+                      break;
+
+              case 2: Home = notifications();
+                      title = "Notifications";
+                      break;
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  Widget mediminder() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          child: FirebaseAnimatedList(
+              query: reference.child("Mediminders"),
+              itemBuilder:  (_, DataSnapshot snapshot,
+                  Animation<double> animation, int index) {
+                return Card(
+                  child: ListTile(
                       title: Text(
-                        snapshot.value['mediname']
+                          snapshot.value['mediname']
                       ),
                       subtitle: Column(
                         children: <Widget>[
                           Text(
-                            snapshot.value['starttime']
+                              snapshot.value['starttime']
                           ),
                           Text(
                               snapshot.value['dosage']
@@ -67,24 +121,35 @@ class _HomePageState extends State<HomePage> {
                               snapshot.value['interval']
                           ),
                           Text(
-                            snapshot.value['type']
+                              snapshot.value['type']
                           )
                         ],
                       )
-                    ),
-                  );
-                }
-            ),
+                  ),
+                );
+              }
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        ),
+
+        FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget visitDetails() {
+    return Center(
+      child: Icon(Icons.details),
+    );
+  }
+
+  Widget notifications() {
+    return Center(
+      child: Icon(Icons.notifications),
     );
   }
 }

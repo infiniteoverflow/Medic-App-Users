@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     reference = database.reference().child("Patients").child(widget.user.uid);
-    Home = mediminder();
+    Home = visitDetails();
   }
 
   @override
@@ -142,8 +142,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget visitDetails() {
-    return Center(
-      child: Icon(Icons.details),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          child: FirebaseAnimatedList(
+              query: reference.child("Doctors Visited"),
+              itemBuilder:  (_, DataSnapshot snapshot,
+                  Animation<double> animation, int index) {
+                print(snapshot.value);
+                return Text(
+                  "Hello"
+                );
+              }
+          ),
+        ),
+
+        FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
+          },
+        ),
+      ],
     );
   }
 

@@ -423,14 +423,9 @@ class _HomePageState extends State<HomePage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: <Widget>[
-                                    RaisedButton(
-                                      child: Text(
-                                          "Click Here for More Details"
-                                      ),
+                                    IconButton(
+                                      icon: Icon(Icons.more_horiz),
                                       onPressed: () {
-
-                                        print(map.values.elementAt(index));
-
                                         showDialog(
                                             context: context,
                                             builder: (BuildContext context) => CupertinoPopupSurface(
@@ -626,7 +621,6 @@ class _HomePageState extends State<HomePage> {
                                             )
                                         );
                                       },
-                                      color: Colors.amberAccent,
                                     )
                                   ],
                                 )

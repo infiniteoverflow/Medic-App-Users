@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:medic_app_users/Models/medicines.dart';
 import 'visit_details.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:medic_app_users/Models/mediminders.dart';
-import 'package:medic_app_users/screens/medicine_details.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
-import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
@@ -662,12 +658,21 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
 
-                return Card(
-                  child: ListTile(
-                    title: Text(
-                      snapshot.value['Doc name']
-                    ),
-                  ),
+                return GridView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                  padding: EdgeInsets.all(2.0),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(
+                          "Hello"
+                        ),
+                      ),
+                    );
+                  }
                 );
               }
           ),

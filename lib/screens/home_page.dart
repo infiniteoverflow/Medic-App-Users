@@ -26,7 +26,10 @@ class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference reference;
 
-  Widget Home;
+
+  String name = " ",address = " ",dob = " ",id = " ",age = " ";
+
+  Widget Home,D;
 
   int bottomBarIndex = 0;
   String title = "Mediminders";
@@ -36,7 +39,26 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     reference = database.reference().child("Patients").child(widget.user.uid);
+
+    starter();
+
     Home = mediminder();
+  }
+
+  Future<void> starter() async{
+    await reference.once().then((DataSnapshot snapshot) {
+      this.name = snapshot.value['firstname'] + " " + snapshot.value['lastname'];
+      this.address = snapshot.value['address'];
+      this.dob = snapshot.value['dob'];
+      this.id = snapshot.value['patientid'];
+      this.age = snapshot.value['age'];
+
+      print(this.id);
+
+      setState(() {
+
+      });
+    });
   }
 
   @override
@@ -52,8 +74,8 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: <Widget>[
 
-            UserAccountsDrawerHeader(
-              accountName: Text("Aswin Gopinathan"),
+            UserAccountsDrawerHeader (
+              accountName: Text(this.name),
               accountEmail: Text(widget.user.email),
               currentAccountPicture: CircleAvatar(
                 backgroundColor:
@@ -61,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                     ? Colors.blue
                     : Colors.white,
                 child: Text(
-                  "A",
+                  this.name.substring(0,1).toUpperCase(),
                   style: TextStyle(fontSize: 40.0),
                 ),
               ),
@@ -71,7 +93,7 @@ class _HomePageState extends State<HomePage> {
               child: ListTile(
                 leading: Icon(CupertinoIcons.person_add_solid),
                 title: Text(
-                  "Patient Details"
+                    "Patient Details"
                 ),
                 trailing: Icon(Icons.arrow_forward ,color: Colors.black,),
                 onTap: () {
@@ -110,23 +132,23 @@ class _HomePageState extends State<HomePage> {
 
                               Card(
                                 child: ListTile(
-                                  title: Text(
-                                    widget.user.email,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold
+                                    title: Text(
+                                      widget.user.email,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                      ),
                                     ),
-                                  ),
 
-                                  leading: SizedBox(
-                                    child: Icon(Icons.email,color: Colors.red,)
-                                  )
+                                    leading: SizedBox(
+                                        child: Icon(Icons.email,color: Colors.red,)
+                                    )
                                 ),
                               ),
 
                               Card(
                                 child: ListTile(
                                     title: Text(
-                                      "Aswin Gopinathan",
+                                      this.name.toUpperCase(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold
                                       ),
@@ -141,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                               Card(
                                 child: ListTile(
                                     title: Text(
-                                      "aswin1234",
+                                      this.id,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold
                                       ),
@@ -151,7 +173,8 @@ class _HomePageState extends State<HomePage> {
                                         child: Icon(CupertinoIcons.tags_solid,color: Colors.red,)
                                     )
                                 ),
-                              )
+                              ),
+
                             ],
                           )
                       )

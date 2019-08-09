@@ -337,6 +337,38 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget selectIcon(Map<dynamic , dynamic> map) {
+    if(map['type'] == "Tablet") {
+      return Icon(
+        IconData(0xe903, fontFamily: "Ic"),
+        size: 75,
+        color: Color(0xFF3EB16F),
+      );
+    }
+
+    else if(map['type'] == "Bottle") {
+      return Icon(
+        IconData(0xe900, fontFamily: "Ic"),
+        size: 75,
+        color: Color(0xFF3EB16F),
+      );
+    }
+
+    else if(map['type'] == "Pill") {
+      return Icon(
+        IconData(0xe901, fontFamily: "Ic"),
+        size: 75,
+        color: Color(0xFF3EB16F),
+      );
+    }
+
+    return Icon(
+      IconData(0xe902, fontFamily: "Ic"),
+      size: 75,
+      color: Color(0xFF3EB16F),
+    );
+  }
+
   Widget mediminder() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -349,6 +381,8 @@ class _HomePageState extends State<HomePage> {
                 if (snapshot.hasData) {
                   Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
                   map.forEach((dynamic, v) => print(v["pic"]));
+
+                  print(map.values.elementAt(0));
 
 
                   return GridView.builder(
@@ -363,7 +397,7 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           child: ListView(
                             children: <Widget>[
-                              Text("Hello")
+                              selectIcon(map.values.elementAt(index)),
                             ],
                           ),
                         ),

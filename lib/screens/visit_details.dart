@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'medicines_prescribed.dart';
+
 class VisitDetails extends StatefulWidget {
 
    FirebaseUser user;
@@ -317,6 +319,30 @@ class VisitDetailsState extends State<VisitDetails> {
                                                         ),
                                                       )
                                                   ),
+                                                ),
+
+
+                                                GestureDetector(
+                                                  child: Card(
+                                                    child: ListTile(
+                                                      title: Text(
+                                                        "Medicines prescribed",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.orangeAccent
+                                                        ),
+                                                      ),
+
+                                                      trailing: Icon(Icons.navigate_next,size: 30,color: Colors.red,),
+                                                    ),
+                                                  ),
+
+                                                  onTap: () {
+                                                    Navigator.push(context, MaterialPageRoute(
+                                                        builder: (BuildContext context) => MedicinePresc(widget.user)
+                                                    ));
+                                                  },
                                                 )
 
                                               ],

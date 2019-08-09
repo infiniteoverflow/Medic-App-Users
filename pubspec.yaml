@@ -83,6 +83,9 @@ flutter:
   - family: Angel
     fonts:
     - asset: assets/fonts/neu/Angel Signature.ttf
+  - family: Special
+    fonts:
+    - asset: assets/fonts/SpecialElite-Regular.ttf
 
 
   #       - asset: fonts/Schyler-Italic.ttf

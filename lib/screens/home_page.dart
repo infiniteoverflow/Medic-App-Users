@@ -385,24 +385,77 @@ class _HomePageState extends State<HomePage> {
                   print(map.values.elementAt(0));
 
 
-                  return GridView.builder(
-                    shrinkWrap: true,
+                  return SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2),
-                    itemCount: map.values.toList().length,
-                    padding: EdgeInsets.all(2.0),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        child: Container(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2),
+                      itemCount: map.values.toList().length,
+                      padding: EdgeInsets.all(2.0),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
                           child: ListView(
                             children: <Widget>[
+
                               selectIcon(map.values.elementAt(index)),
+
+                              Center(
+                                child: Text(
+                                  map.values.elementAt(index)['mediname'],
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Special'
+                                  ),
+                                ),
+                              ),
+
+                              Center(
+                                child: Text(
+                                    "Every "+map.values.elementAt(index)['interval']+" Hours"
+                                ),
+                              ),
+
+
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: <Widget>[
+                                  RaisedButton(
+                                    child: Text(
+                                        "Click Here for More Details"
+                                    ),
+                                    onPressed: () {
+
+                                      print(map.values.elementAt(index));
+
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) => CupertinoPopupSurface(
+                                              child: Center(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(left: 20.0),
+                                                    child: Text(
+                                                      "This is a Cupertino Popup Surface...",
+                                                      style: TextStyle(
+                                                          decoration: TextDecoration.none,
+                                                          fontSize: 20.0
+                                                      ),
+                                                    ),
+                                                  )
+                                              )
+                                          )
+                                      );
+                                    },
+                                    color: Colors.amberAccent,
+                                  )
+                                ],
+                              )
                             ],
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   );
                 } else {
                   return Center(

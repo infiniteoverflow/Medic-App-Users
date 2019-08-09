@@ -175,6 +175,100 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
 
+
+                              Card(
+                                child: ListTile(
+                                    title: Text(
+                                      this.age,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+
+                                    leading: SizedBox(
+                                        child: Text(
+                                          "Age :",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.amber,
+                                            fontSize: 22
+                                          ),
+                                        )
+                                    )
+                                ),
+                              ),
+
+
+                              Card(
+                                child: ListTile(
+                                    title: Text(
+                                      this.address,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+
+                                    leading: SizedBox(
+                                        child: Text(
+                                          "Address :",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.indigoAccent,
+                                              fontSize: 22
+                                          ),
+                                        )
+                                    )
+                                ),
+                              ),
+
+
+                              Card(
+                                child: ListTile(
+                                    title: Text(
+                                      this.dob,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+
+                                    leading: SizedBox(
+                                        child: Text(
+                                          "Date of Birth :",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.red,
+                                              fontSize: 22
+                                          ),
+                                        )
+                                    )
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.all(30),
+                              ),
+
+                              Center(
+                                child: SizedBox(
+                                  height: 50,
+                                  child: RaisedButton(
+                                    child: Text(
+                                      "Update Details",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                    shape: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(25)
+                                    ),
+                                    onPressed: () {
+
+                                    },
+                                    color: Colors.amber,
+                                  ),
+                                )
+                              )
+
                             ],
                           )
                       )

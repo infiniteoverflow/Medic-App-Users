@@ -68,6 +68,14 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           title
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
+            },
+          )
+        ],
       ),
 
       drawer: Drawer(
@@ -333,52 +341,44 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Expanded(
-          child: FirebaseAnimatedList(
-              query: database.reference().child("Patients").child(widget.user.uid).child("Mediminders"),
-              itemBuilder:  (_, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                if(snapshot == null) {
+
+        Flexible(
+          child: StreamBuilder(
+              stream: reference.child("Mediminders").onValue,
+              builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+                if (snapshot.hasData) {
+                  Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+                  map.forEach((dynamic, v) => print(v["pic"]));
+
+
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemCount: map.values.toList().length,
+                    padding: EdgeInsets.all(2.0),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Card(
+                        child: Container(
+                          child: ListView(
+                            children: <Widget>[
+                              Text("Hello")
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else {
                   return Center(
-                    child: Text(
-                      "You dont hav any mediminders yet :("
-                    ),
+                    child: CircularProgressIndicator(),
                   );
                 }
-
-                return Card(
-                  child: ListTile(
-                      title: Text(
-                          snapshot.value['mediname']
-                      ),
-                      subtitle: Column(
-                        children: <Widget>[
-                          Text(
-                              snapshot.value['starttime']
-                          ),
-                          Text(
-                              snapshot.value['dosage']
-                          ),
-                          Text(
-                              snapshot.value['interval']
-                          ),
-                          Text(
-                              snapshot.value['type']
-                          )
-                        ],
-                      )
-                  ),
-                );
-              }
-          ),
+              }),
         ),
 
-        FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
-          },
-        ),
+
       ],
     );
   }

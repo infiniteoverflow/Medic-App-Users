@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text(
                   "Patient Details"
                 ),
-                trailing: Icon(Icons.arrow_forward,color: Colors.black,),
+                trailing: Icon(Icons.arrow_forward ,color: Colors.black,),
                 onTap: () {
                   showDialog(
                       context: context,

@@ -640,53 +640,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget visitDetails() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          child: FirebaseAnimatedList(
-              query: reference.child("Doctors Visited"),
-              itemBuilder:  (_, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                print(snapshot.value);
-                if(snapshot == null) {
-                  return Center(
-                    child: Text(
-                      "You havnt visited any doctors yet :)"
-                    ),
-                  );
-                }
-
-                return GridView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                  padding: EdgeInsets.all(2.0),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(
-                          "Hello"
-                        ),
-                      ),
-                    );
-                  }
-                );
-              }
-          ),
-        ),
-
-        FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
-          },
-        ),
-      ],
-    );
-  }
 
   Widget notifications() {
     return Center(

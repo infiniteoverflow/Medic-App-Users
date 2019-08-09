@@ -140,17 +140,186 @@ class VisitDetailsState extends State<VisitDetails> {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) => CupertinoPopupSurface(
-                                            child: Center(
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(left: 20.0),
-                                                  child: Text(
-                                                    "This is a Cupertino Popup Surface...",
-                                                    style: TextStyle(
-                                                        decoration: TextDecoration.none,
-                                                        fontSize: 20.0
+                                            child: ListView(
+                                              children: <Widget>[
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: EdgeInsets.only(top: 20),
+                                                      child: SizedBox(
+                                                        height: 50,
+                                                        child: RaisedButton(
+                                                          child: Icon(CupertinoIcons.back),
+                                                          color: Colors.amber,
+                                                          onPressed: () {
+                                                            Navigator.of(context, rootNavigator: true).pop();
+                                                          },
+                                                          shape: CircleBorder(
+                                                            side: BorderSide(
+                                                              style: BorderStyle.solid,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+
+                                                Padding(
+                                                  padding: EdgeInsets.all(30),
+                                                ),
+
+                                                Card(
+                                                  child: ListTile(
+                                                    title: Text(
+                                                      "Doctor name",
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 20
+                                                      ),
                                                     ),
+
+                                                    subtitle: Padding(
+                                                      padding: EdgeInsets.only(top: 10),
+                                                      child: Text(
+                                                        map.values.elementAt(index)['Doc name'],
+                                                        style: TextStyle(
+                                                            fontFamily: 'Special',
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 15
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ),
+                                                ),
+
+
+                                                Card(
+                                                  child: ListTile(
+                                                      title: Text(
+                                                        "Doctor Email",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 20
+                                                        ),
+                                                      ),
+
+                                                      subtitle: Padding(
+                                                        padding: EdgeInsets.only(top: 10),
+                                                        child: Text(
+                                                          map.values.elementAt(index)['Doc email'],
+                                                          style: TextStyle(
+                                                              fontFamily: 'Special',
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15
+                                                          ),
+                                                        ),
+                                                      )
+                                                  ),
+                                                ),
+
+
+                                                Card(
+                                                  child: ListTile(
+                                                      title: Text(
+                                                        "Visited on",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 20
+                                                        ),
+                                                      ),
+
+                                                      subtitle: Padding(
+                                                        padding: EdgeInsets.only(top: 10),
+                                                        child: Text(
+                                                          map.values.elementAt(index)['Visited on'],
+                                                          style: TextStyle(
+                                                              fontFamily: 'Special',
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15
+                                                          ),
+                                                        ),
+                                                      )
+                                                  ),
+                                                ),
+
+
+                                                Card(
+                                                  child: ListTile(
+                                                      title: Text(
+                                                        "Next Appointment",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 20
+                                                        ),
+                                                      ),
+
+                                                      subtitle: Padding(
+                                                        padding: EdgeInsets.only(top: 10),
+                                                        child: Text(
+                                                          map.values.elementAt(index)['Next Appointment'],
+                                                          style: TextStyle(
+                                                              fontFamily: 'Special',
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15
+                                                          ),
+                                                        ),
+                                                      )
+                                                  ),
+                                                ),
+
+
+                                                Card(
+                                                  child: ListTile(
+                                                      title: Text(
+                                                        "Purpose of Visit",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 20
+                                                        ),
+                                                      ),
+
+                                                      subtitle: Padding(
+                                                        padding: EdgeInsets.only(top: 10),
+                                                        child: Text(
+                                                          map.values.elementAt(index)['purpose'],
+                                                          style: TextStyle(
+                                                              fontFamily: 'Special',
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15
+                                                          ),
+                                                        ),
+                                                      )
+                                                  ),
+                                                ),
+
+
+                                                Card(
+                                                  child: ListTile(
+                                                      title: Text(
+                                                        "Room Alloted",
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 20
+                                                        ),
+                                                      ),
+
+                                                      subtitle: Padding(
+                                                        padding: EdgeInsets.only(top: 10),
+                                                        child: Text(
+                                                          map.values.elementAt(index)['Room Alloted'],
+                                                          style: TextStyle(
+                                                              fontFamily: 'Special',
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15
+                                                          ),
+                                                        ),
+                                                      )
                                                   ),
                                                 )
+
+                                              ],
                                             )
                                         )
                                     );

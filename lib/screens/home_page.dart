@@ -47,6 +47,27 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text("Aswin Gopinathan"),
+              accountEmail: Text(widget.user.email),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor:
+                Theme.of(context).platform == TargetPlatform.iOS
+                    ? Colors.blue
+                    : Colors.white,
+                child: Text(
+                  "A",
+                  style: TextStyle(fontSize: 40.0),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+
       body: Home,
 
       bottomNavigationBar: BottomNavigationBar(

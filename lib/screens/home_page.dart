@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
 
             UserAccountsDrawerHeader (
-              accountName: Text(this.name),
+              accountName: Text(this.name[0].toUpperCase()+ this.name.substring(1)),
               accountEmail: Text(widget.user.email),
               currentAccountPicture: CircleAvatar(
                 backgroundColor:

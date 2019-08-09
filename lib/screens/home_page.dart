@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:medic_app_users/Models/medicines.dart';
 import 'visit_details.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:medic_app_users/Models/mediminders.dart';
 import 'package:medic_app_users/screens/medicine_details.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
@@ -50,6 +51,7 @@ class _HomePageState extends State<HomePage> {
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
+
             UserAccountsDrawerHeader(
               accountName: Text("Aswin Gopinathan"),
               accountEmail: Text(widget.user.email),
@@ -64,6 +66,99 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+
+            Card(
+              child: ListTile(
+                leading: Icon(CupertinoIcons.person_add_solid),
+                title: Text(
+                  "Patient Details"
+                ),
+                trailing: Icon(Icons.arrow_forward,color: Colors.black,),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => CupertinoPopupSurface(
+                          child: ListView(
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 20),
+                                    child: SizedBox(
+                                      height: 50,
+                                      child: RaisedButton(
+                                        child: Icon(CupertinoIcons.back),
+                                        color: Colors.amber,
+                                        onPressed: () {
+                                          Navigator.of(context, rootNavigator: true).pop();
+                                        },
+                                        shape: CircleBorder(
+                                          side: BorderSide(
+                                            style: BorderStyle.solid,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.all(30),
+                              ),
+
+                              Card(
+                                child: ListTile(
+                                  title: Text(
+                                    widget.user.email,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+
+                                  leading: SizedBox(
+                                    child: Icon(Icons.email,color: Colors.red,)
+                                  )
+                                ),
+                              ),
+
+                              Card(
+                                child: ListTile(
+                                    title: Text(
+                                      "Aswin Gopinathan",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+
+                                    leading: SizedBox(
+                                        child: Icon(Icons.person,color: Colors.red,)
+                                    )
+                                ),
+                              ),
+
+                              Card(
+                                child: ListTile(
+                                    title: Text(
+                                      "aswin1234",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+
+                                    leading: SizedBox(
+                                        child: Icon(CupertinoIcons.tags_solid,color: Colors.red,)
+                                    )
+                                ),
+                              )
+                            ],
+                          )
+                      )
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

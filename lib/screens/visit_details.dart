@@ -343,6 +343,97 @@ class VisitDetailsState extends State<VisitDetails> {
                                                         builder: (BuildContext context) => MedicinePresc(widget.user)
                                                     ));
                                                   },
+                                                ),
+
+                                                Padding(
+                                                  padding: EdgeInsets.only(top: 20),
+                                                ),
+                                                
+                                                
+                                                Center(
+                                                  child: SizedBox(
+                                                    height: 40,
+                                                    width: 170,
+                                                    child: RaisedButton(
+                                                      child: Text(
+                                                        "Delete this Visit",
+                                                        style: TextStyle(
+                                                          color: Colors.white
+                                                        ),
+                                                      ),
+
+                                                      color: Colors.red,
+
+                                                      onPressed: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) => CupertinoAlertDialog(
+                                                              title: Text(
+                                                                "Are You sure you want to delete this medicine",
+                                                                style: TextStyle(
+                                                                    fontSize: 20.0,
+                                                                    color: Colors.red
+                                                                ),
+                                                              ),
+                                                              actions: <Widget>[
+                                                                CupertinoActionSheetAction(
+                                                                  onPressed: () {
+
+                                                                  },
+                                                                  child: CupertinoButton(
+                                                                      color: Colors.red,
+                                                                      child: Text(
+                                                                        "Delete",
+                                                                        style: TextStyle(
+                                                                            color: Colors.black
+                                                                        ),
+                                                                      ),
+                                                                      onPressed: () {
+                                                                        Navigator.pop(context);
+                                                                        Navigator.pop(context);
+
+                                                                        reference.child("Doctors Visited")
+                                                                            .child(map.keys.toList()[index])
+                                                                            .remove();
+
+                                                                        setState(() {
+
+                                                                        });
+                                                                      }
+                                                                  ),
+                                                                ),
+
+                                                                CupertinoActionSheetAction(
+                                                                  onPressed: () {
+
+                                                                  },
+                                                                  child: CupertinoButton(
+
+                                                                      color: Colors.amber,
+                                                                      child: Text(
+                                                                        "Cancel",
+                                                                        style: TextStyle(
+                                                                            color: Colors.black
+                                                                        ),
+                                                                      ),
+                                                                      onPressed: () {
+                                                                        Navigator.of(context).pop();
+                                                                      }
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )
+                                                        );
+                                                      },
+                                                      shape: OutlineInputBorder(
+                                                          borderRadius: BorderRadius.circular(20)
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                
+                                                Padding(
+                                                  padding: EdgeInsets.all(20),
                                                 )
 
                                               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:medic_app_users/Models/medicines.dart';
+import 'visit_details.dart';
 import 'package:medic_app_users/Models/mediminders.dart';
 import 'package:medic_app_users/screens/medicine_details.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     reference = database.reference().child("Patients").child(widget.user.uid);
-    Home = visitDetails();
+    Home = mediminder();
   }
 
   @override
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                       title = "Mediminders";
                       break;
 
-              case 1: Home = visitDetails();
+              case 1: Home = VisitDetails(widget.user);
                       title = "Visit Details";
                       break;
 
@@ -101,9 +102,17 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         Expanded(
           child: FirebaseAnimatedList(
-              query: reference.child("Mediminders"),
+              query: database.reference().child("Patients").child(widget.user.uid).child("Mediminders"),
               itemBuilder:  (_, DataSnapshot snapshot,
                   Animation<double> animation, int index) {
+                if(snapshot == null) {
+                  return Center(
+                    child: Text(
+                      "You dont hav any mediminders yet :("
+                    ),
+                  );
+                }
+
                 return Card(
                   child: ListTile(
                       title: Text(
@@ -151,8 +160,20 @@ class _HomePageState extends State<HomePage> {
               itemBuilder:  (_, DataSnapshot snapshot,
                   Animation<double> animation, int index) {
                 print(snapshot.value);
-                return Text(
-                  "Hello"
+                if(snapshot == null) {
+                  return Center(
+                    child: Text(
+                      "You havnt visited any doctors yet :)"
+                    ),
+                  );
+                }
+
+                return Card(
+                  child: ListTile(
+                    title: Text(
+                      snapshot.value['Doc name']
+                    ),
+                  ),
                 );
               }
           ),

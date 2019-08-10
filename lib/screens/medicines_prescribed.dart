@@ -79,24 +79,56 @@ class MedicinePrescState extends State<MedicinePresc> {
                                     padding: EdgeInsets.only(top: 10,right: 5,left: 5),
                                     child: Center(
                                       child: Text(
-                                        map.values.elementAt(index)['name'],
+                                        map.values.elementAt(index)['name'].toString().toUpperCase(),
+                                        softWrap: true,
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontFamily: 'Special',
-                                            fontSize: 20,
+                                            fontSize: 25,
                                         ),
                                       ),
                                     ),
                                   ),
 
                                   Padding(
-                                    padding: EdgeInsets.all(5),
+                                    padding: EdgeInsets.all(10),
                                     child: Text(
-                                      "Daily Dosage",
+                                      "Daily Dosage :",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
+                                        color: Colors.amber,
+                                        fontSize: 20
+                                      ),
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Center(
+                                      child: Text(
+                                        map.values.elementAt(index)['dailyDose'].toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green
+                                        ),
+                                      ),
+                                    )
+                                  ),
+
+
+                                  Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Center(
+                                      child: IconButton(
+                                          icon: Icon(Icons.more_horiz),
+                                          onPressed: () {
+
+                                          }
                                       ),
                                     ),
                                   )
+
+
                                 ],
                               ),
                             ),

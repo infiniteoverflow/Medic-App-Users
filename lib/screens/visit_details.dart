@@ -75,7 +75,10 @@ class VisitDetailsState extends State<VisitDetails> {
                                   padding: EdgeInsets.only(top: 10),
                                   child: Center(
                                     child: Text(
-                                      "Doctor : "+map.values.elementAt(index)['Doc name'],
+                                      "Doctor : "+map.values.elementAt(index)['Doc name']
+                                          .toString()[0].toUpperCase()+
+                                          map.values.elementAt(index)['Doc name']
+                                              .toString().substring(1),
                                       style: TextStyle(
                                           fontFamily: 'Special',
                                           fontSize: 20
@@ -185,7 +188,10 @@ class VisitDetailsState extends State<VisitDetails> {
                                                     subtitle: Padding(
                                                       padding: EdgeInsets.only(top: 10),
                                                       child: Text(
-                                                        map.values.elementAt(index)['Doc name'],
+                                                        map.values.elementAt(index)['Doc name']
+                                                        .toString()[0].toUpperCase()+
+                                                        map.values.elementAt(index)['Doc name']
+                                                        .toString().substring(1),
                                                         style: TextStyle(
                                                             fontFamily: 'Special',
                                                             fontWeight: FontWeight.bold,

@@ -78,7 +78,7 @@ class VisitDetailsState extends State<VisitDetails> {
                                       "Doctor : "+map.values.elementAt(index)['Doc name']
                                           .toString()[0].toUpperCase()+
                                           map.values.elementAt(index)['Doc name']
-                                              .toString().substring(1),
+                                              .toString().substring(1) ,
                                       style: TextStyle(
                                           fontFamily: 'Special',
                                           fontSize: 20

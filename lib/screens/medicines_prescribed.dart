@@ -47,8 +47,19 @@ class MedicinePrescState extends State<MedicinePresc> {
             child: StreamBuilder(
                 stream: reference.child("Doctors Visited").child(widget.docUID).child("Medicines Prescribed").onValue,
                 builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
+
                   if (snapshot.hasData) {
                     Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+
+                    if(map == null) {
+                      return Center(
+                        child: Text(
+                            "No Medicines :("
+                        ),
+                      );
+                    }
+
+
                     map.forEach((dynamic, v) => print(v["pic"]));
 
                     print(map.values.elementAt(0));
@@ -65,7 +76,6 @@ class MedicinePrescState extends State<MedicinePresc> {
                         padding: EdgeInsets.all(2.0),
                         itemBuilder: (BuildContext context, int index) {
 
-                          print(map.values);
                           return SizedBox(
                             child: Card(
                               elevation: 10,
@@ -122,7 +132,254 @@ class MedicinePrescState extends State<MedicinePresc> {
                                       child: IconButton(
                                           icon: Icon(Icons.more_horiz),
                                           onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) => CupertinoPopupSurface(
+                                                    child: ListView(
+                                                      children: <Widget>[
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: <Widget>[
+                                                            Padding(
+                                                              padding: EdgeInsets.only(top: 20),
+                                                              child: SizedBox(
+                                                                height: 50,
+                                                                child: RaisedButton(
+                                                                  child: Icon(CupertinoIcons.back),
+                                                                  color: Colors.amber,
+                                                                  onPressed: () {
+                                                                    Navigator.of(context, rootNavigator: true).pop();
+                                                                  },
+                                                                  shape: CircleBorder(
+                                                                    side: BorderSide(
+                                                                      style: BorderStyle.solid,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
 
+                                                        Padding(
+                                                          padding: EdgeInsets.all(30),
+                                                        ),
+
+                                                        Card(
+                                                          child: ListTile(
+                                                              title: Text(
+                                                                "Medicine name",
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 20
+                                                                ),
+                                                              ),
+
+                                                              subtitle: Padding(
+                                                                padding: EdgeInsets.only(top: 10),
+                                                                child: Text(
+                                                                  map.values.elementAt(index)['name']
+                                                                      .toString()[0].toUpperCase()+
+                                                                  map.values.elementAt(index)['name']
+                                                                  .toString().substring(1),
+                                                                  style: TextStyle(
+                                                                      fontFamily: 'Special',
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 18
+                                                                  ),
+                                                                ),
+                                                              )
+                                                          ),
+                                                        ),
+
+
+                                                        Card(
+                                                          child: ListTile(
+                                                              title: Text(
+                                                                "Note",
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 20
+                                                                ),
+                                                              ),
+
+                                                              subtitle: Padding(
+                                                                padding: EdgeInsets.only(top: 10),
+                                                                child: Text(
+                                                                  map.values.elementAt(index)['note'],
+                                                                  softWrap: true,
+                                                                  style: TextStyle(
+                                                                      fontFamily: 'Special',
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 15
+                                                                  ),
+                                                                ),
+                                                              )
+                                                          ),
+                                                        ),
+//
+//
+                                                        Card(
+                                                          child: ListTile(
+                                                              title: Text(
+                                                                "Daily Dosage",
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 20
+                                                                ),
+                                                              ),
+
+                                                              subtitle: Padding(
+                                                                padding: EdgeInsets.only(top: 10),
+                                                                child: Text(
+                                                                  map.values.elementAt(index)['dailyDose'].toString(),
+                                                                  style: TextStyle(
+                                                                      fontFamily: 'Special',
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 15
+                                                                  ),
+                                                                ),
+                                                              )
+                                                          ),
+                                                        ),
+//
+//
+                                                        Card(
+                                                          child: ListTile(
+                                                              title: Text(
+                                                                "Start Date",
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 20
+                                                                ),
+                                                              ),
+
+                                                              subtitle: Padding(
+                                                                padding: EdgeInsets.only(top: 10),
+                                                                child: Text(
+                                                                  map.values.elementAt(index)['startDate'],
+                                                                  style: TextStyle(
+                                                                      fontFamily: 'Special',
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 15
+                                                                  ),
+                                                                ),
+                                                              )
+                                                          ),
+                                                        ),
+//
+//
+                                                        Card(
+                                                          child: ListTile(
+                                                              title: Text(
+                                                                "End Date",
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: 20
+                                                                ),
+                                                              ),
+
+                                                              subtitle: Padding(
+                                                                padding: EdgeInsets.only(top: 10),
+                                                                child: Text(
+                                                                  map.values.elementAt(index)['endDate'],
+                                                                  style: TextStyle(
+                                                                      fontFamily: 'Special',
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 15
+                                                                  ),
+                                                                ),
+                                                              )
+                                                          ),
+                                                        ),
+
+                                                        Padding(
+                                                          padding: EdgeInsets.all(10),
+                                                        ),
+
+                                                        Center(
+                                                          child: RaisedButton(
+                                                            shape: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(30)
+                                                            ),
+                                                            child: Text(
+                                                              "Delete this Medicine",
+                                                              style: TextStyle(
+                                                                color: Colors.white
+                                                              ),
+                                                            ),
+
+                                                            color: Colors.red,
+                                                            onPressed: () {
+                                                              showDialog(
+                                                                  context: context,
+                                                                  builder: (BuildContext context) => CupertinoAlertDialog(
+                                                                    title: Text(
+                                                                      "Are You sure you want to delete this medicine",
+                                                                      style: TextStyle(
+                                                                          fontSize: 20.0,
+                                                                          color: Colors.red
+                                                                      ),
+                                                                    ),
+                                                                    actions: <Widget>[
+                                                                      CupertinoActionSheetAction(
+                                                                        onPressed: () {
+
+                                                                        },
+                                                                        child: CupertinoButton(
+                                                                            color: Colors.red,
+                                                                            child: Text(
+                                                                              "Delete",
+                                                                              style: TextStyle(
+                                                                                  color: Colors.black
+                                                                              ),
+                                                                            ),
+                                                                            onPressed: () {
+                                                                              Navigator.pop(context);
+                                                                              Navigator.pop(context);
+
+
+                                                                              reference.child("Doctors Visited")
+                                                                                  .child(widget.docUID)
+                                                                                  .child("Medicines Prescribed")
+                                                                                  .child(map.keys.toList()[index])
+                                                                                  .remove();
+
+                                                                              setState(() {
+
+                                                                              });
+                                                                            }
+                                                                        ),
+                                                                      ),
+
+                                                                      CupertinoActionSheetAction(
+                                                                        onPressed: () {
+
+                                                                        },
+                                                                        child: CupertinoButton(
+
+                                                                            color: Colors.amber,
+                                                                            child: Text(
+                                                                              "Cancel",
+                                                                              style: TextStyle(
+                                                                                  color: Colors.black
+                                                                              ),
+                                                                            ),
+                                                                            onPressed: () {
+                                                                              Navigator.of(context).pop();
+                                                                            }
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                              );
+                                                            },
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                )
+                                            );
                                           }
                                       ),
                                     ),

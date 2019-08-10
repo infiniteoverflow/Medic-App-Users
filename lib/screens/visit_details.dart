@@ -45,6 +45,15 @@ class VisitDetailsState extends State<VisitDetails> {
               builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
                 if (snapshot.hasData) {
                   Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+
+                  if(map == null) {
+                    return Center(
+                      child: Text(
+                        "No Doctors Visted Yet :)"
+                      ),
+                    );
+                  }
+
                   map.forEach((dynamic, v) => print(v["pic"]));
 
                   print(map.values.elementAt(0));

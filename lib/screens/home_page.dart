@@ -279,6 +279,28 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               ),
+            ),
+
+
+            Card(
+              child: ListTile(
+                title: Text(
+                  "Call an Ambulance"
+                ),
+                leading: Icon(Icons.call),
+                trailing: Icon(Icons.arrow_forward,color: Colors.black,),
+              ),
+            ),
+
+
+            Card(
+              child: ListTile(
+                title: Text(
+                  "Reserve a Room"
+                ),
+                trailing: Icon(Icons.arrow_forward,color: Colors.black,),
+                leading: Icon(Icons.bookmark),
+              ),
             )
           ],
         ),
@@ -376,6 +398,15 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context, AsyncSnapshot<Event> snapshot) {
                 if (snapshot.hasData) {
                   Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
+
+                  if(map == null) {
+                    return Center(
+                      child: Text(
+                        "No Mediminders Added Yet :)"
+                      ),
+                    );
+                  }
+
                   map.forEach((dynamic, v) => print(v["pic"]));
 
                   print(map.values.elementAt(0));

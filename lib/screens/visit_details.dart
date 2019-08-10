@@ -340,7 +340,10 @@ class VisitDetailsState extends State<VisitDetails> {
 
                                                   onTap: () {
                                                     Navigator.push(context, MaterialPageRoute(
-                                                        builder: (BuildContext context) => MedicinePresc(widget.user)
+                                                        builder: (BuildContext context) => MedicinePresc(
+                                                            widget.user,
+                                                            map.keys.elementAt(index)
+                                                        )
                                                     ));
                                                   },
                                                 ),

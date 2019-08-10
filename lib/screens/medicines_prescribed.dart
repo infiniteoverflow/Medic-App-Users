@@ -32,6 +32,7 @@ class MedicinePrescState extends State<MedicinePresc> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+
       appBar: AppBar(
         title: Text(
           "Medicines Prescribed"
@@ -50,143 +51,58 @@ class MedicinePrescState extends State<MedicinePresc> {
                     Map<dynamic, dynamic> map = snapshot.data.snapshot.value;
                     map.forEach((dynamic, v) => print(v["pic"]));
 
+                    print(map.values.elementAt(0));
 
-                    return ListView(
-                      children: <Widget>[
-                        GridView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1),
-                          itemCount: map.values.toList().length,
-                          padding: EdgeInsets.all(2.0),
-                          itemBuilder: (BuildContext context, int index) {
 
-                            print(map.values);
-                            return Padding(
-                              padding: EdgeInsets.only(left: 40,right: 40),
-                              child: Card(
-                                  child: GestureDetector(
-                                    child: ListTile(
-                                      title: Text(
-                                        map.values.elementAt(index)['name'].toString().toUpperCase(),
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                        itemCount: map.values.toList().length,
+                        padding: EdgeInsets.all(2.0),
+                        itemBuilder: (BuildContext context, int index) {
+
+                          print(map.values);
+                          return SizedBox(
+                            child: Card(
+                              elevation: 10,
+                              shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: ListView(
+                                children: <Widget>[
+
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 10,right: 5,left: 5),
+                                    child: Center(
+                                      child: Text(
+                                        map.values.elementAt(index)['name'],
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Special'
+                                            fontFamily: 'Special',
+                                            fontSize: 20,
                                         ),
                                       ),
+                                    ),
+                                  ),
 
-                                      subtitle: ListView(
-                                        children: <Widget>[
-
-                                          Padding(
-                                            padding: EdgeInsets.all(10),
-                                          ),
-
-                                          Text(
-                                            "Note :",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.red
-                                            ),
-                                          ),
-                                          
-                                          Padding(
-                                            padding: EdgeInsets.all(5),
-                                          ),
-
-                                          Text(
-                                            map.values.elementAt(index)['note'].toString().toUpperCase(),
-                                            style: TextStyle(
-                                              color: Colors.orange
-                                            ),
-                                          ),
-
-                                          Padding(
-                                            padding: EdgeInsets.all(10),
-                                          ),
-
-                                          Text(
-                                            "Start Date",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              color: Colors.green
-                                            ),
-                                          ),
-
-                                          Padding(
-                                            padding: EdgeInsets.all(5),
-                                          ),
-
-                                          Text(
-                                            map.values.elementAt(index)['startDate'],
-                                            style: TextStyle(
-                                              color: Colors.deepOrange
-                                            ),
-                                          ),
-
-
-                                          Padding(
-                                            padding: EdgeInsets.all(10),
-                                          ),
-
-                                          Text(
-                                            "End Date",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                                color: Colors.green
-                                            ),
-                                          ),
-
-                                          Padding(
-                                            padding: EdgeInsets.all(5),
-                                          ),
-
-                                          Text(
-                                            map.values.elementAt(index)['endDate'],
-                                            style: TextStyle(
-                                                color: Colors.deepOrange
-                                            ),
-                                          ),
-
-
-                                          Padding(
-                                            padding: EdgeInsets.all(10),
-                                          ),
-
-                                          Text(
-                                            "Daily Dose",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                                color: Colors.green
-                                            ),
-                                          ),
-
-                                          Padding(
-                                            padding: EdgeInsets.all(5),
-                                          ),
-
-                                          Text(
-                                            map.values.elementAt(index)['dailyDose'].toString(),
-                                            style: TextStyle(
-                                                color: Colors.deepOrange
-                                            ),
-                                          )
-                                        ],
+                                  Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Text(
+                                      "Daily Dosage",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                       ),
-
-                                      trailing: Icon(Icons.delete,color: Colors.red,),
                                     ),
                                   )
+                                ],
                               ),
-                            );
-                          },
-                        ),
-                      ],
+                            ),
+                          );
+                        },
+                      ),
                     );
                   } else {
                     return Center(

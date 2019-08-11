@@ -5,8 +5,7 @@ import 'visit_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
 import 'dart:async';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -30,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   int bottomBarIndex = 0;
   String title = "Mediminders";
 
-  //  String name;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   void initState() {
     super.initState();
@@ -39,6 +38,38 @@ class _HomePageState extends State<HomePage> {
     starter();
 
     Home = mediminder();
+
+
+  }
+
+  void initializeLocalNotification() {
+
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    var initializationSettingsIOS =
+        IOSInitializationSettings(
+
+        );
+
+    var initializationSettings = InitializationSettings(
+      initializationSettingsAndroid,
+      initializationSettingsIOS
+    );
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    flutterLocalNotificationsPlugin.initialize(
+        initializationSettings,
+        onSelectNotification: onSelectNotification
+    );
+
+  }
+
+  Future<void> onSelectNotification(String payload) {
+
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> HomePage(widget.user)));
+
   }
 
   Future<void> starter() async{

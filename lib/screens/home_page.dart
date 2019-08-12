@@ -38,8 +38,7 @@ class _HomePageState extends State<HomePage> {
     starter();
 
     Home = mediminder();
-
-
+    initializeLocalNotification();
   }
 
   void initializeLocalNotification() {
@@ -453,6 +452,10 @@ class _HomePageState extends State<HomePage> {
                       itemCount: map.values.toList().length,
                       padding: EdgeInsets.all(2.0),
                       itemBuilder: (BuildContext context, int index) {
+
+
+                        scheduledNotification(map.values.elementAt(index));
+
                         return SizedBox(
                           child: Card(
                             elevation: 10,
@@ -700,6 +703,37 @@ class _HomePageState extends State<HomePage> {
 
       ],
     );
+  }
+
+  Future<void> scheduledNotification(Map<dynamic, dynamic> map) async{
+
+    //print(key.toString());
+    int hour = int.parse(map['starttime'].toString().substring(0,2));
+    print(hour);
+    int min = int.parse(map['starttime'].toString().substring(2,));
+    print(min);
+
+    var time = Time(07,41,30);
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'repeatDailyAtTime channel id',
+      'repeatDailyAtTime channel name',
+      'repeatDailyAtTime description',
+      importance: Importance.Max,
+      sound: 'slow_spring_board',
+      ledColor: Color(0xFF3EB16F),
+      ledOffMs: 1000,
+      ledOnMs: 1000,
+      enableLights: true,
+    );
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.showDailyAtTime(1000, 'show daily title',
+      'Daily notification shown',time, platformChannelSpecifics,payload: "Hello",);
+
+    print('set for '+time.hour.toString()+" : "+time.minute.toString());
   }
 
 

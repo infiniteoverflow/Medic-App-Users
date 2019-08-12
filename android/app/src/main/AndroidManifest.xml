@@ -20,6 +20,8 @@
             </intent-filter>
         </receiver>
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <service          android:name="com.example.localnotifications.services.LocalNotificationsService"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

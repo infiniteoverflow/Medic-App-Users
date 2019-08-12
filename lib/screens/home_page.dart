@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:io';
 
 class HomePage extends StatefulWidget {
 
@@ -31,15 +33,64 @@ class _HomePageState extends State<HomePage> {
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+
   void initState() {
     super.initState();
     reference = database.reference().child("Patients").child(widget.user.uid);
 
     starter();
 
+    _firebaseMessaging.requestNotificationPermissions();
+    _firebaseMessaging.getToken().then((token){
+      print(token);
+    });
+
     Home = mediminder();
     initializeLocalNotification();
+
+    firebaseCloudMessaging_Listeners();
+    saveDeviceToken();
   }
+
+  void saveDeviceToken() async{
+    String token = await _firebaseMessaging.getToken();
+    print("Heloo");
+    print(token);
+  }
+
+  void firebaseCloudMessaging_Listeners() {
+    if (Platform.isIOS) iOS_Permission();
+
+    _firebaseMessaging.getToken().then((token){
+      print(token);
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
+  }
+
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true)
+    );
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings)
+    {
+      print("Settings registered: $settings");
+    });
+  }
+
 
   void initializeLocalNotification() {
 
@@ -713,7 +764,7 @@ class _HomePageState extends State<HomePage> {
     int min = int.parse(map['starttime'].toString().substring(2,));
     print(min);
 
-    var time = Time(07,41,30);
+    var time = Time(07,45,30);
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'repeatDailyAtTime channel id',
@@ -730,8 +781,13 @@ class _HomePageState extends State<HomePage> {
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
-    await flutterLocalNotificationsPlugin.showDailyAtTime(1000, 'show daily title',
-      'Daily notification shown',time, platformChannelSpecifics,payload: "Hello",);
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        1234,
+        'Hello All',
+        'Welcome to Notification',
+        Time(07,50,0),
+        platformChannelSpecifics
+    );
 
     print('set for '+time.hour.toString()+" : "+time.minute.toString());
   }

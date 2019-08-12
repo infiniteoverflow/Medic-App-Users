@@ -38,6 +38,7 @@ dependencies:
   path_provider: ^1.2.0
   fluttertoast: ^3.1.0
   firebase_messaging: ^5.1.3
+  intl: ^0.15.2
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,11 @@ flutter:
   - assets/animations/
   - assets/sound/
   - assets/images/
+  - assets/avatars/
+  - assets/images/home.jpeg
+  - assets/images/login.jpg
+  - assets/images/tick.png
+  - assets/images/medic.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

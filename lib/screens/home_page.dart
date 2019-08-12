@@ -51,13 +51,11 @@ class _HomePageState extends State<HomePage> {
     initializeLocalNotification();
 
     firebaseCloudMessaging_Listeners();
-    saveDeviceToken();
+    //saveDeviceToken();
   }
 
   void saveDeviceToken() async{
     String token = await _firebaseMessaging.getToken();
-    print("Heloo");
-    print(token);
   }
 
   void firebaseCloudMessaging_Listeners() {

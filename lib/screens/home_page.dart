@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
 
   void initState() {
@@ -42,52 +42,100 @@ class _HomePageState extends State<HomePage> {
 
     starter();
 
-    _firebaseMessaging.requestNotificationPermissions();
-    _firebaseMessaging.getToken().then((token){
+    firebaseMessaging.requestNotificationPermissions();
+    firebaseMessaging.getToken().then((token){
       print(token);
     });
 
     Home = mediminder();
     initializeLocalNotification();
 
-    firebaseCloudMessaging_Listeners();
+    var android = new AndroidInitializationSettings('mipmap/ic_launcher');
+    var ios = new IOSInitializationSettings();
+    var platform = new InitializationSettings(android, ios);
+    flutterLocalNotificationsPlugin.initialize(platform);
+
+    firebaseMessaging.configure(
+      onLaunch: (Map<String, dynamic> msg) {
+        print(" onLaunch called ${(msg)}");
+      },
+      onResume: (Map<String, dynamic> msg) {
+        print(" onResume called ${(msg)}");
+      },
+      onMessage: (Map<String, dynamic> msg) {
+        showNotification(msg);
+        print(" onMessage called ${(msg)}");
+      },
+    );
+    firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, alert: true, badge: true));
+    firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings setting) {
+      print('IOS Setting Registed');
+    });
+//    firebaseMessaging.getToken().then((token) {
+//      update(token);
+//    });
     //saveDeviceToken();
   }
 
-  void saveDeviceToken() async{
-    String token = await _firebaseMessaging.getToken();
-  }
+  showNotification(Map<String, dynamic> msg) async {
 
-  void firebaseCloudMessaging_Listeners() {
-    if (Platform.isIOS) iOS_Permission();
+    print(msg['notification']['title']);
 
-    _firebaseMessaging.getToken().then((token){
-      print(token);
-    });
-
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print('on message $message');
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print('on resume $message');
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print('on launch $message');
-      },
+    var android = new AndroidNotificationDetails(
+      'sdffds dsffds',
+      "CHANNLE NAME",
+      "channelDescription",
     );
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android, iOS);
+    await flutterLocalNotificationsPlugin.show(
+        0, msg['notification']['title'], msg['notification']['body'], platform);
   }
 
-  void iOS_Permission() {
-    _firebaseMessaging.requestNotificationPermissions(
-        IosNotificationSettings(sound: true, badge: true, alert: true)
-    );
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings)
-    {
-      print("Settings registered: $settings");
-    });
-  }
+//  update(String token) {
+//    print(token);
+//    DatabaseReference databaseReference = new FirebaseDatabase().reference();
+//    databaseReference.child('fcm-token/${token}').set({"token": token});
+//    textValue = token;
+//    setState(() {});
+//  }
+
+//  void saveDeviceToken() async{
+//    String token = await _firebaseMessaging.getToken();
+//  }
+
+//  void firebaseCloudMessaging_Listeners() {
+//    if (Platform.isIOS) iOS_Permission();
+//
+//    _firebaseMessaging.getToken().then((token){
+//      print(token);
+//    });
+//
+//    _firebaseMessaging.configure(
+//      onMessage: (Map<String, dynamic> message) async {
+//        print('on message $message');
+//      },
+//      onResume: (Map<String, dynamic> message) async {
+//        print('on resume $message');
+//      },
+//      onLaunch: (Map<String, dynamic> message) async {
+//        print('on launch $message');
+//      },
+//    );
+//  }
+//
+//  void iOS_Permission() {
+//    _firebaseMessaging.requestNotificationPermissions(
+//        IosNotificationSettings(sound: true, badge: true, alert: true)
+//    );
+//    _firebaseMessaging.onIosSettingsRegistered
+//        .listen((IosNotificationSettings settings)
+//    {
+//      print("Settings registered: $settings");
+//    });
+//  }
 
 
   void initializeLocalNotification() {

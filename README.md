@@ -2,7 +2,7 @@
 
 A new Flutter application which can be used by the Patients admitted to a hospital. 
 
-## Getting Started
+# Getting Started
 
 This project is a starting point for a Flutter application.
 

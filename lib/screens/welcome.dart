@@ -1,225 +1,217 @@
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import './home_page.dart';
-import 'package:flutter/cupertino.dart';
+import 'home_page.dart';
+import 'package:flutter/services.dart';
+
+import 'home_page.dart';
+
 
 class Welcome extends StatefulWidget {
   @override
   _WelcomeState createState() => _WelcomeState();
 }
 
+
 class _WelcomeState extends State<Welcome> {
 
-  String buttonText = "Get Started";
-  String _email,_password;
   Widget Home;
-  GlobalKey<FormState> _form = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  BuildContext con;
+
+  String _email,_id;
 
   _WelcomeState() {
-    Home = welcomePage();
+    Home = loginScreen();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-//          Container(
-//            decoration: BoxDecoration(
-//              image: DecorationImage(
-//                image: AssetImage("assets/images/welcome_image.png"),
-//                fit: BoxFit.cover,
-//              ),
-//            ),
-//            child: null /* add child content here */,
-//          ),
-
-          Home,
-
-        ],
-      )
-    );
-  }
-
-  Widget welcomePage() {
-    return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        key: _scaffoldKey,
+        body: Stack(
           children: <Widget>[
-            Text(
-              "Welcome to Medic App !",
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  letterSpacing: 2
-              ),
-            ),
 
-            Container(
-              padding: EdgeInsets.only(top: 30.0),
-            ),
-
-            Container(
-              child: RaisedButton(
-                child: Text(
-                  buttonText,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      letterSpacing: 2
-                  ),
-                ),
-                color: Colors.amber,
-                shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20)
-                ),
-                elevation: 10,
-
-                onPressed: () {
-                  setState(() {
-                    buttonText = "Log In";
-                    Home = signPage();
-                  });
-                },
-              ),
-              width: 250,
-              height: 70,
+            Center(
+                child: Home
             )
           ],
         )
     );
   }
 
-  Widget signPage() {
-    return Center(
-      child: ListView(
-        padding: EdgeInsets.only(top: 30),
-//        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Form(
-            key: _form,
-            child: Column(
-              children: <Widget>[
+  Widget welcomeScreen() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
 
-                Image(
-                  image: AssetImage('assets/images/medic.png'),
-                ),
+        Image(
+          image: AssetImage('assets/images/logo2.png'),
+        ),
 
-                Container(
-                  padding: EdgeInsets.only(left: 15,right: 15,top: 10),
-                  child: TextFormField(
-                    validator: (input) {
-                      if(input.isEmpty)
-                        return "Please enter the Email";
-                    },
-                    onSaved: (input) => _email = input,
-                    decoration: InputDecoration(
-                        hintText: "Enter Your Email",
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),
-                        labelText: "Email",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30)
-                        )
-                    ),
-                  ),
-                ),
 
-                Container(
-                  padding: EdgeInsets.only(top: 20),
-                ),
+        Container(
+          padding: EdgeInsets.only(top: 30.0),
+        ),
 
-                Container(
-                  padding: EdgeInsets.only(left: 15,right: 15),
-                  child: TextFormField(
-                    validator: (input) {
-                      if(input.length < 6)
-                        return "Please enter a password greater than 6 characters";
-                    },
-                    onSaved: (input) => _password = input,
-                    decoration: InputDecoration(
-                        hintText: "Enter Your Patient ID",
-                        hintStyle: TextStyle(
-                            fontWeight: FontWeight.bold
-                        ),
-                        labelText: "Patient ID",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30)
-                        )
-                    ),
-                    obscureText: true,
-                  ),
-                ),
-
-                Container(
-                  padding: EdgeInsets.only(top: 20),
-                ),
-
-                Container(
-                  child: RaisedButton(
-                    child: Text(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          letterSpacing: 2
-                      ),
-                    ),
-                    color: Colors.amberAccent[200],
-                    shape: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30)
-                    ),
-                    elevation: 10,
-
-                    onPressed: () {
-                      signinUser();
-                    },
-                  ),
-                  width: 350,
-                  height: 50,
-                ),
-
-                Container(
-                  padding: EdgeInsets.only(top: 20),
-                  child: GestureDetector(
-                    child: Text(
-                      "Forgot Email or Id?",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 25
-                      ),
-                    ),
-                    onTap: () {
-                      print("pressed");
-                    },
-                  ),
-                )
-
-              ],
+        Container(
+          child: RaisedButton(
+            child: Text(
+              "Get Started",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.black,
+                  letterSpacing: 2
+              ),
             ),
-          )
-        ],
-      ),
+            color: Colors.green,
+            shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20)
+            ),
+            elevation: 10,
+
+            onPressed: () {
+              setState(() {
+                this.Home = loginScreen();
+                con = context;
+              });
+            },
+          ),
+          width: 250,
+          height: 70,
+        )
+      ],
     );
   }
 
-  Future<void> signinUser() async{
-    final formState = _form.currentState;
+  Widget loginScreen() {
+    return ListView(
+      children: <Widget>[
+        Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+
+              Image(
+                image: AssetImage('assets/images/logo2.png'),
+              ),
+
+              Container(
+                padding: EdgeInsets.all(20),
+                child: TextFormField(
+                  validator: (input) {
+                    if(input.isEmpty)
+                      return "Please enter an Email";
+                    else return null;
+                  },
+                  onSaved: (input) {
+                    _email = input;
+                  },
+                  decoration: InputDecoration(
+                      hintText: "Enter the Email Address",
+                      labelText: "Email Address",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30)
+                      )
+                  ),
+                ),
+              ),
+
+              Container(
+                padding: EdgeInsets.only(top: 10,right: 20,left: 20),
+                child: TextFormField(
+                  validator: (input) {
+                    if(input.isEmpty)
+                      return "Please Enter the ID";
+                    else return null;
+                  },
+                  onSaved: (input) {
+                    _id = input;
+                  },
+                  decoration: InputDecoration(
+                      hintText: "Enter the Doctor ID",
+                      labelText: "Doctor ID",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30)
+                      )
+                  ),
+                  obscureText: true,
+                ),
+              ),
+
+              Container(
+                padding: EdgeInsets.only(top: 40,right: 20,left: 20),
+                width: 300,
+                height: 80,
+                child: RaisedButton(
+                  child: Text(
+                      "LogIn"
+                  ),
+                  color: Colors.amber,
+                  onPressed: () {
+                    loginUser();
+                  },
+                  elevation: 10,
+                  shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30)
+                  ),
+                ),
+              )
+
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Future<void> loginUser() async{
+    final formState = _formKey.currentState;
+
     if(formState.validate()) {
       formState.save();
       try {
-        FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+        FirebaseUser user = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email, password: _id);
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomePage(user);
         }));
-      } catch(e) {
-        print(e);
+      }catch(e) {
+        print("Hello ${e.toString()}");
+
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+
+        switch(e.toString()) {
+          case 'PlatformException(ERROR_INVALID_EMAIL, The email address is badly formatted., null)':
+            normalSnackBar(con, "Enter a Valid Email ID");
+            break;
+          case 'PlatformException(ERROR_WRONG_PASSWORD, The password is invalid or the user does not have a password., null)':
+            normalSnackBar(con, "Doctor ID Incorrect");
+            break;
+          case 'PlatformException(ERROR_USER_NOT_FOUND, There is no user record corresponding to this identifier. The user may have been deleted., null)':
+            normalSnackBar(con, "User does not exist");
+            break;
+          case 'PlatformException(ERROR_NETWORK_REQUEST_FAILED, A network error (such as timeout, interrupted connection or unreachable host) has occurred., null)':
+            normalSnackBar(con, "Check Your Internet Connection");
+            break;
+          default:
+            normalSnackBar(con,"Please check the Credentials");
+        }
       }
     }
   }
+
+  void normalSnackBar(BuildContext context,String error) {
+    var snackBar = SnackBar(
+      content: Text(
+          error
+      ),
+    );
+
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
 }

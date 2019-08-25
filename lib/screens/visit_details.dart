@@ -122,32 +122,6 @@ class VisitDetailsState extends State<VisitDetails> {
                                 ),
 
 
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Center(
-                                    child: Text.rich(
-                                      TextSpan(
-                                        text: 'Purpose:\n ',
-                                        style: TextStyle(
-                                            fontFamily: 'Special',
-                                            fontSize: 20
-                                        ),// default text style
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                              text: map.values.elementAt(index)['purpose'],
-                                              style: TextStyle(
-                                                  fontFamily: 'Special',
-                                                  fontSize: 20,
-                                                  color: Colors.amber
-                                              )
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-
                                 IconButton(
                                   icon: Icon(Icons.more_horiz),
                                   onPressed: () {

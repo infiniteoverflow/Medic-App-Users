@@ -553,238 +553,439 @@ class _HomePageState extends State<HomePage> {
 
                         scheduledNotification(map.values.elementAt(index));
 
-                        return SizedBox(
-                          child: Card(
-                            elevation: 10,
-                            child: ListView(
-                              children: <Widget>[
+                        return Padding(
+                          padding: EdgeInsets.all(10),
+                          child: GestureDetector(
+                            onTap: () {
 
-                                selectIcon(map.values.elementAt(index)),
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => CupertinoPopupSurface(
+                                      child: ListView(
+                                        children: <Widget>[
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: EdgeInsets.only(top: 20),
+                                                child: SizedBox(
+                                                  height: 50,
+                                                  child: RaisedButton(
+                                                    child: Icon(CupertinoIcons.back),
+                                                    color: Colors.amber,
+                                                    onPressed: () {
+                                                      Navigator.of(context, rootNavigator: true).pop();
+                                                    },
+                                                    shape: CircleBorder(
+                                                      side: BorderSide(
+                                                        style: BorderStyle.solid,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
 
-                                Center(
-                                  child: Text(
-                                    map.values.elementAt(index)['mediname'],
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: 'Special'
+                                          Padding(
+                                            padding: EdgeInsets.all(30),
+                                          ),
+
+                                          selectIcon(map.values.elementAt(index)),
+
+                                          Padding(
+                                            padding: EdgeInsets.all(10),
+                                          ),
+
+                                          Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                "Medicine Name",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                              subtitle: Text(
+                                                  map.values.elementAt(index)['mediname']
+                                              ),
+                                            ),
+                                          ),
+
+                                          Padding(
+                                            padding: EdgeInsets.all(5),
+                                          ),
+
+                                          Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                "Medicine Type",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                              subtitle: Text(
+                                                  map.values.elementAt(index)['type']
+                                              ),
+                                            ),
+                                          ),
+
+                                          Padding(
+                                            padding: EdgeInsets.all(5),
+                                          ),
+
+                                          Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                "Dosage",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                              subtitle: Text(
+                                                  map.values.elementAt(index)['dosage'] + " mg"
+                                              ),
+                                            ),
+                                          ),
+
+                                          Padding(
+                                            padding: EdgeInsets.all(5),
+                                          ),
+
+                                          Card(
+                                            child: ListTile(
+                                              title: Text(
+                                                "Duration",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                              subtitle: Text(
+                                                  "Every "+map.values.elementAt(index)['interval']
+                                                      +" Hours"
+                                              ),
+                                            ),
+                                          ),
+
+                                          Padding(
+                                            padding: EdgeInsets.all(5),
+                                          ),
+
+                                          Center(
+                                            child: RaisedButton(
+                                              child: Text(
+                                                "Delete this Medicine",
+                                                style: TextStyle(
+                                                    color: Colors.white
+                                                ),
+                                              ),
+                                              color: Colors.red,
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) => CupertinoAlertDialog(
+                                                      title: Text(
+                                                        "Are You sure you want to delete this medicine",
+                                                        style: TextStyle(
+                                                            fontSize: 20.0,
+                                                            color: Colors.red
+                                                        ),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        CupertinoActionSheetAction(
+                                                          onPressed: () {
+
+                                                          },
+                                                          child: CupertinoButton(
+                                                              color: Colors.red,
+                                                              child: Text(
+                                                                "Delete",
+                                                                style: TextStyle(
+                                                                    color: Colors.black
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.pop(context);
+                                                                Navigator.pop(context);
+
+                                                                reference.child("Mediminders")
+                                                                    .child(map.keys.toList()[index])
+                                                                    .remove();
+
+                                                                setState(() {
+
+                                                                });
+                                                              }
+                                                          ),
+                                                        ),
+
+                                                        CupertinoActionSheetAction(
+                                                          onPressed: () {
+
+                                                          },
+                                                          child: CupertinoButton(
+
+                                                              color: Colors.amber,
+                                                              child: Text(
+                                                                "Cancel",
+                                                                style: TextStyle(
+                                                                    color: Colors.black
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.of(context).pop();
+                                                              }
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                );
+                                              },
+                                              shape: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(30)
+                                              ),
+                                            ),
+                                          )
+
+
+
+                                        ],
+                                      )
+                                  )
+                              );
+
+                            },
+                            child: Card(
+                              elevation: 10,
+                              child: ListView(
+                                children: <Widget>[
+
+                                  selectIcon(map.values.elementAt(index)),
+
+                                  Center(
+                                    child: Text(
+                                      map.values.elementAt(index)['mediname'],
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: 'Special'
+                                      ),
                                     ),
                                   ),
-                                ),
 
-                                Center(
-                                  child: Text(
-                                      "Every "+map.values.elementAt(index)['interval']+" Hours"
+                                  Center(
+                                    child: Text(
+                                        "Every "+map.values.elementAt(index)['interval']+" Hours"
+                                    ),
                                   ),
-                                ),
 
 
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: <Widget>[
-                                    IconButton(
-                                      icon: Icon(Icons.more_horiz),
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) => CupertinoPopupSurface(
-                                                child: ListView(
-                                                  children: <Widget>[
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding: EdgeInsets.only(top: 20),
-                                                          child: SizedBox(
-                                                            height: 50,
-                                                            child: RaisedButton(
-                                                              child: Icon(CupertinoIcons.back),
-                                                              color: Colors.amber,
-                                                              onPressed: () {
-                                                                Navigator.of(context, rootNavigator: true).pop();
-                                                              },
-                                                              shape: CircleBorder(
-                                                                side: BorderSide(
-                                                                  style: BorderStyle.solid,
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(Icons.more_horiz),
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) => CupertinoPopupSurface(
+                                                  child: ListView(
+                                                    children: <Widget>[
+                                                      Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding: EdgeInsets.only(top: 20),
+                                                            child: SizedBox(
+                                                              height: 50,
+                                                              child: RaisedButton(
+                                                                child: Icon(CupertinoIcons.back),
+                                                                color: Colors.amber,
+                                                                onPressed: () {
+                                                                  Navigator.of(context, rootNavigator: true).pop();
+                                                                },
+                                                                shape: CircleBorder(
+                                                                  side: BorderSide(
+                                                                    style: BorderStyle.solid,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
+                                                          )
+                                                        ],
+                                                      ),
+
+                                                      Padding(
+                                                        padding: EdgeInsets.all(30),
+                                                      ),
+
+                                                      selectIcon(map.values.elementAt(index)),
+
+                                                      Padding(
+                                                        padding: EdgeInsets.all(10),
+                                                      ),
+
+                                                      Card(
+                                                        child: ListTile(
+                                                          title: Text(
+                                                            "Medicine Name",
+                                                            style: TextStyle(
+                                                                fontWeight: FontWeight.bold
+                                                            ),
                                                           ),
-                                                        )
-                                                      ],
-                                                    ),
-
-                                                    Padding(
-                                                      padding: EdgeInsets.all(30),
-                                                    ),
-
-                                                    selectIcon(map.values.elementAt(index)),
-
-                                                    Padding(
-                                                      padding: EdgeInsets.all(10),
-                                                    ),
-
-                                                    Card(
-                                                      child: ListTile(
-                                                        title: Text(
-                                                          "Medicine Name",
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold
+                                                          subtitle: Text(
+                                                              map.values.elementAt(index)['mediname']
                                                           ),
-                                                        ),
-                                                        subtitle: Text(
-                                                            map.values.elementAt(index)['mediname']
                                                         ),
                                                       ),
-                                                    ),
 
-                                                    Padding(
-                                                      padding: EdgeInsets.all(5),
-                                                    ),
+                                                      Padding(
+                                                        padding: EdgeInsets.all(5),
+                                                      ),
 
-                                                    Card(
-                                                      child: ListTile(
-                                                        title: Text(
-                                                          "Medicine Type",
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold
+                                                      Card(
+                                                        child: ListTile(
+                                                          title: Text(
+                                                            "Medicine Type",
+                                                            style: TextStyle(
+                                                                fontWeight: FontWeight.bold
+                                                            ),
                                                           ),
-                                                        ),
-                                                        subtitle: Text(
-                                                            map.values.elementAt(index)['type']
+                                                          subtitle: Text(
+                                                              map.values.elementAt(index)['type']
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
 
-                                                    Padding(
-                                                      padding: EdgeInsets.all(5),
-                                                    ),
+                                                      Padding(
+                                                        padding: EdgeInsets.all(5),
+                                                      ),
 
-                                                    Card(
-                                                      child: ListTile(
-                                                        title: Text(
-                                                          "Dosage",
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold
+                                                      Card(
+                                                        child: ListTile(
+                                                          title: Text(
+                                                            "Dosage",
+                                                            style: TextStyle(
+                                                                fontWeight: FontWeight.bold
+                                                            ),
                                                           ),
-                                                        ),
-                                                        subtitle: Text(
-                                                            map.values.elementAt(index)['dosage'] + " mg"
+                                                          subtitle: Text(
+                                                              map.values.elementAt(index)['dosage'] + " mg"
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
 
-                                                    Padding(
-                                                      padding: EdgeInsets.all(5),
-                                                    ),
+                                                      Padding(
+                                                        padding: EdgeInsets.all(5),
+                                                      ),
 
-                                                    Card(
-                                                      child: ListTile(
-                                                        title: Text(
-                                                          "Duration",
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold
+                                                      Card(
+                                                        child: ListTile(
+                                                          title: Text(
+                                                            "Duration",
+                                                            style: TextStyle(
+                                                                fontWeight: FontWeight.bold
+                                                            ),
                                                           ),
-                                                        ),
-                                                        subtitle: Text(
-                                                            "Every "+map.values.elementAt(index)['interval']
-                                                                +" Hours"
+                                                          subtitle: Text(
+                                                              "Every "+map.values.elementAt(index)['interval']
+                                                                  +" Hours"
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
 
-                                                    Padding(
-                                                      padding: EdgeInsets.all(5),
-                                                    ),
+                                                      Padding(
+                                                        padding: EdgeInsets.all(5),
+                                                      ),
 
-                                                    Center(
-                                                      child: RaisedButton(
-                                                        child: Text(
-                                                          "Delete this Medicine",
-                                                          style: TextStyle(
-                                                              color: Colors.white
+                                                      Center(
+                                                        child: RaisedButton(
+                                                          child: Text(
+                                                            "Delete this Medicine",
+                                                            style: TextStyle(
+                                                                color: Colors.white
+                                                            ),
                                                           ),
-                                                        ),
-                                                        color: Colors.red,
-                                                        onPressed: () {
-                                                          showDialog(
-                                                              context: context,
-                                                              builder: (BuildContext context) => CupertinoAlertDialog(
-                                                                title: Text(
-                                                                  "Are You sure you want to delete this medicine",
-                                                                  style: TextStyle(
-                                                                      fontSize: 20.0,
-                                                                      color: Colors.red
-                                                                  ),
-                                                                ),
-                                                                actions: <Widget>[
-                                                                  CupertinoActionSheetAction(
-                                                                    onPressed: () {
-
-                                                                    },
-                                                                    child: CupertinoButton(
-                                                                        color: Colors.red,
-                                                                        child: Text(
-                                                                          "Delete",
-                                                                          style: TextStyle(
-                                                                              color: Colors.black
-                                                                          ),
-                                                                        ),
-                                                                        onPressed: () {
-                                                                          Navigator.pop(context);
-                                                                          Navigator.pop(context);
-
-                                                                          reference.child("Mediminders")
-                                                                              .child(map.keys.toList()[index])
-                                                                              .remove();
-
-                                                                          setState(() {
-
-                                                                          });
-                                                                        }
+                                                          color: Colors.red,
+                                                          onPressed: () {
+                                                            showDialog(
+                                                                context: context,
+                                                                builder: (BuildContext context) => CupertinoAlertDialog(
+                                                                  title: Text(
+                                                                    "Are You sure you want to delete this medicine",
+                                                                    style: TextStyle(
+                                                                        fontSize: 20.0,
+                                                                        color: Colors.red
                                                                     ),
                                                                   ),
+                                                                  actions: <Widget>[
+                                                                    CupertinoActionSheetAction(
+                                                                      onPressed: () {
 
-                                                                  CupertinoActionSheetAction(
-                                                                    onPressed: () {
-
-                                                                    },
-                                                                    child: CupertinoButton(
-
-                                                                        color: Colors.amber,
-                                                                        child: Text(
-                                                                          "Cancel",
-                                                                          style: TextStyle(
-                                                                              color: Colors.black
+                                                                      },
+                                                                      child: CupertinoButton(
+                                                                          color: Colors.red,
+                                                                          child: Text(
+                                                                            "Delete",
+                                                                            style: TextStyle(
+                                                                                color: Colors.black
+                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                        onPressed: () {
-                                                                          Navigator.of(context).pop();
-                                                                        }
+                                                                          onPressed: () {
+                                                                            Navigator.pop(context);
+                                                                            Navigator.pop(context);
+
+                                                                            reference.child("Mediminders")
+                                                                                .child(map.keys.toList()[index])
+                                                                                .remove();
+
+                                                                            setState(() {
+
+                                                                            });
+                                                                          }
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                          );
-                                                        },
-                                                        shape: OutlineInputBorder(
-                                                            borderRadius: BorderRadius.circular(30)
+
+                                                                    CupertinoActionSheetAction(
+                                                                      onPressed: () {
+
+                                                                      },
+                                                                      child: CupertinoButton(
+
+                                                                          color: Colors.amber,
+                                                                          child: Text(
+                                                                            "Cancel",
+                                                                            style: TextStyle(
+                                                                                color: Colors.black
+                                                                            ),
+                                                                          ),
+                                                                          onPressed: () {
+                                                                            Navigator.of(context).pop();
+                                                                          }
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                            );
+                                                          },
+                                                          shape: OutlineInputBorder(
+                                                              borderRadius: BorderRadius.circular(30)
+                                                          ),
                                                         ),
-                                                      ),
-                                                    )
+                                                      )
 
 
 
-                                                  ],
-                                                )
-                                            )
-                                        );
-                                      },
-                                    )
-                                  ],
-                                )
-                              ],
+                                                    ],
+                                                  )
+                                              )
+                                          );
+                                        },
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
+                          )
                         );
                       },
                     ),

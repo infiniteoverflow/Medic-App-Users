@@ -36,6 +36,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget Home,D;
 
+  String ambulanceNumber = "05912498808";
+
   int bottomBarIndex = 0;
   String title = "Mediminders";
 
@@ -458,7 +460,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                launch("tel://9072215663");
+                launch("tel://$ambulanceNumber");
               },
             ),
 

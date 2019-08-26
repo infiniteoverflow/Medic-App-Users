@@ -206,6 +206,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           title
         ),
+        backgroundColor: Colors.green,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -221,11 +222,21 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
 
             UserAccountsDrawerHeader (
+              decoration: ShapeDecoration(
+                shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(0)
+                ),
+                image:DecorationImage(
+                  image: AssetImage('assets/images/login.jpg'),
+                  fit: BoxFit.fill
+                )
+              ),
               accountName: Text(
                   this.name[0].toUpperCase()+ this.name.substring(1),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.amber
+                  color: Colors.red,
+                  fontSize: 20
                 ),
               ),
               accountEmail: Text(

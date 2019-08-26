@@ -460,7 +460,22 @@ class _HomePageState extends State<HomePage> {
                 trailing: Icon(Icons.arrow_forward,color: Colors.black,),
                 leading: Icon(Icons.bookmark,color: Colors.green,),
               ),
-            )
+            ),
+
+            GestureDetector(
+              child: Card(
+                child: ListTile(
+                  title: Text(
+                      "Log Out"
+                  ),
+                  leading: Icon(Icons.subdirectory_arrow_left,color: Colors.deepOrangeAccent,),
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
           ],
         ),
       ),

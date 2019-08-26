@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get_it/get_it.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'visit_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
@@ -19,6 +21,12 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+class CallsAndMessagesService {
+  void call(String number) => launch("tel:$number");
+  void sendSms(String number) => launch("sms:$number");
+  void sendEmail(String email) => launch("mailto:$email");
+}
+
 class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference reference;
@@ -35,12 +43,16 @@ class _HomePageState extends State<HomePage> {
 
   FirebaseMessaging firebaseMessaging = FirebaseMessaging();
 
+  static GetIt locator;
+
 
   void initState() {
     super.initState();
     reference = database.reference().child("Patients").child(widget.user.uid);
 
     starter();
+    //locator = GetIt.asNewInstance();
+    //setupLocator();
 
     firebaseMessaging.requestNotificationPermissions();
     firebaseMessaging.getToken().then((token){
@@ -170,6 +182,9 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> starter() async{
     await reference.once().then((DataSnapshot snapshot) {
+
+      print(snapshot.value);
+
       this.name = snapshot.value['firstname'] + " " + snapshot.value['lastname'];
       this.address = snapshot.value['address'];
       this.dob = snapshot.value['dob'];
@@ -206,23 +221,35 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
 
             UserAccountsDrawerHeader (
-              accountName: Text(this.name[0].toUpperCase()+ this.name.substring(1)),
-              accountEmail: Text(widget.user.email),
+              accountName: Text(
+                  this.name[0].toUpperCase()+ this.name.substring(1),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amber
+                ),
+              ),
+              accountEmail: Text(
+                  widget.user.email,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
               currentAccountPicture: CircleAvatar(
                 backgroundColor:
                 Theme.of(context).platform == TargetPlatform.iOS
-                    ? Colors.blue
-                    : Colors.white,
+                    ? Colors.black
+                    : Colors.black,
                 child: Text(
                   this.name.substring(0,1).toUpperCase(),
-                  style: TextStyle(fontSize: 40.0),
+                  style: TextStyle(fontSize: 40.0,color: Colors.white),
                 ),
               ),
             ),
 
             Card(
               child: ListTile(
-                leading: Icon(CupertinoIcons.person_add_solid),
+                leading: Icon(CupertinoIcons.person_add_solid,color: Colors.amber,),
                 title: Text(
                     "Patient Details"
                 ),
@@ -409,14 +436,19 @@ class _HomePageState extends State<HomePage> {
             ),
 
 
-            Card(
-              child: ListTile(
-                title: Text(
-                  "Call an Ambulance"
+            GestureDetector(
+              child: Card(
+                child: ListTile(
+                  title: Text(
+                      "Call an Ambulance"
+                  ),
+                  leading: Icon(Icons.call,color: Colors.red,),
+                  trailing: Icon(Icons.arrow_forward,color: Colors.black,),
                 ),
-                leading: Icon(Icons.call),
-                trailing: Icon(Icons.arrow_forward,color: Colors.black,),
               ),
+              onTap: () {
+                launch("tel://9072215663");
+              },
             ),
 
 
@@ -426,7 +458,7 @@ class _HomePageState extends State<HomePage> {
                   "Reserve a Room"
                 ),
                 trailing: Icon(Icons.arrow_forward,color: Colors.black,),
-                leading: Icon(Icons.bookmark),
+                leading: Icon(Icons.bookmark,color: Colors.green,),
               ),
             )
           ],

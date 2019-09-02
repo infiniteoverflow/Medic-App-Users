@@ -12,7 +12,7 @@ void main() {
     debugShowCheckedModeBanner: false,
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/HomeScreen': (BuildContext context) => new Welcome()
+      '/WelcomeScreen': (BuildContext context) => new Welcome(),
     },
   ));
 }
@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage(user)));
     }
     else {
-      Navigator.of(context).pushReplacementNamed('/HomeScreen');
+      Navigator.of(context).pushReplacementNamed('/WelcomeScreen');
     }
   }
 

@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference reference;
 
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   String name = " ",address = " ",dob = " ",id = " ",age = " ";
 
@@ -485,8 +486,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
+
+                signOut();
+
+                Navigator.of(context).pushReplacementNamed('/WelcomeScreen');
               },
             ),
           ],
@@ -540,6 +543,12 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  Future<void> signOut() async{
+
+    await auth.signOut();
+
   }
 
   Widget selectIcon(Map<dynamic , dynamic> map) {

@@ -210,14 +210,15 @@ class _HomePageState extends State<HomePage> {
           title
         ),
         backgroundColor: Colors.green,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
-            },
-          )
-        ],
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => NewEntry(widget.user)));
+        },
+        child: Icon(Icons.add),
+        tooltip: "Add Mediminder",
+        backgroundColor: Colors.green,
       ),
 
       drawer: Drawer(

@@ -384,6 +384,7 @@ class VisitDetailsState extends State<VisitDetails> {
                               );
                             },
                             child: Card(
+                              elevation: 10,
                               child: ListView(
                                 children: <Widget>[
 

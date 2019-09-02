@@ -23,8 +23,17 @@ class _WelcomeState extends State<Welcome> {
 
   String _email,_id;
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+
   _WelcomeState() {
-    Home = loginScreen();
+    getUser();
+  }
+
+  @override
+  void initState() {
+
+    //getUser();
   }
 
   @override
@@ -35,7 +44,7 @@ class _WelcomeState extends State<Welcome> {
           children: <Widget>[
 
             Center(
-                child: Home
+                child: loginScreen()
             )
           ],
         )
@@ -166,6 +175,15 @@ class _WelcomeState extends State<Welcome> {
         )
       ],
     );
+  }
+
+  Future<void> getUser() async{
+    FirebaseUser user =await auth.currentUser();
+
+    if(user != null) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(user)));
+    }
+
   }
 
   Future<void> loginUser() async{

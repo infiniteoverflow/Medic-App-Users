@@ -9,7 +9,6 @@ import 'package:medic_app_users/screens/new_entry.dart';
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'dart:io';
 
 class HomePage extends StatefulWidget {
 
@@ -467,14 +466,28 @@ class _HomePageState extends State<HomePage> {
             ),
 
 
-            Card(
-              child: ListTile(
-                title: Text(
+            GestureDetector(
+              child: Card(
+                child: ListTile(
+                  title: Text(
                   "Reserve a Room"
                 ),
                 trailing: Icon(Icons.arrow_forward,color: Colors.black,),
                 leading: Icon(Icons.bookmark,color: Colors.green,),
               ),
+              ),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => CupertinoPopupSurface(
+                    child: Center(
+                      child: Text(
+                        "Hello World"
+                      ),
+                    ),
+                  )
+                );
+              },
             ),
 
             GestureDetector(

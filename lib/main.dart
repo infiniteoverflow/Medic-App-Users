@@ -27,6 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   FirebaseUser user;
   FirebaseAuth auth = FirebaseAuth.instance;
 
+
   startTime() async {
     var _duration = new Duration(seconds: 3);
     return new Timer(_duration, navigationPage);

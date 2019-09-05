@@ -47,6 +47,8 @@ class _HomePageState extends State<HomePage> {
 
   static GetIt locator;
 
+  String docName;
+
 
   void initState() {
     super.initState();
@@ -534,6 +536,12 @@ class _HomePageState extends State<HomePage> {
                                           padding: EdgeInsets.all(10),
                                           child: GestureDetector(
                                             onTap: () {
+
+                                              docName = map.values.elementAt(index)['Doc name']
+                                                  .toString()[0].toUpperCase()+
+                                                  map.values.elementAt(index)['Doc name']
+                                                      .toString().substring(1);
+
                                               showDialog(
                                                   context: context,
                                                   builder: (BuildContext context) => CupertinoPopupSurface(
@@ -741,7 +749,7 @@ class _HomePageState extends State<HomePage> {
                                                                 color: Colors.red,
 
                                                                 onPressed: () {
-
+                                                                  sendNotification();
                                                                 },
                                                                 shape: OutlineInputBorder(
                                                                     borderRadius: BorderRadius.circular(20)
@@ -881,6 +889,79 @@ class _HomePageState extends State<HomePage> {
   Future<void> signOut() async{
 
     await auth.signOut();
+
+  }
+
+  Future<void> sendNotification() async{
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Column(
+            children: <Widget>[
+              Text(
+                "Do You want to send a Message to",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red
+                ),
+              ),
+
+              Text(
+                "\nDr. ${docName}",
+                style: TextStyle(
+                  color: Colors.amber,
+                ),
+              )
+            ],
+          ),
+          content: Text(
+            "\n This will send a message to the Doctor for Reserving a Room",
+            style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.green
+            ),
+          ),
+          actions: <Widget>[
+            CupertinoActionSheetAction(
+              onPressed: () {
+
+              },
+              child: CupertinoButton(
+                  color: Colors.yellow,
+                  child: Text(
+                    "Send",
+                    style: TextStyle(
+                        color: Colors.black
+                    ),
+                  ),
+                  onPressed: () {
+
+                  }
+              ),
+            ),
+
+            CupertinoActionSheetAction(
+              onPressed: () {
+
+              },
+              child: CupertinoButton(
+
+                  color: Colors.amber,
+                  child: Text(
+                    "Exit",
+                    style: TextStyle(
+                        color: Colors.black
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }
+              ),
+            ),
+          ],
+        )
+    );
 
   }
 

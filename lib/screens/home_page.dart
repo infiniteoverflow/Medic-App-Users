@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   static GetIt locator;
 
   String docName;
+  String docUID;
 
 
   void initState() {
@@ -537,6 +538,10 @@ class _HomePageState extends State<HomePage> {
                                           child: GestureDetector(
                                             onTap: () {
 
+                                              docUID = map.keys.elementAt(index);
+
+                                              print(docUID);
+
                                               docName = map.values.elementAt(index)['Doc name']
                                                   .toString()[0].toUpperCase()+
                                                   map.values.elementAt(index)['Doc name']
@@ -936,7 +941,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onPressed: () {
-
+                    setNotificationDatabase();
                   }
               ),
             ),
@@ -962,6 +967,17 @@ class _HomePageState extends State<HomePage> {
           ],
         )
     );
+
+  }
+
+  Future<void> setNotificationDatabase() async{
+
+    reference = database.reference().child("Notifications");
+
+    reference.push().set({
+      'From' : widget.user.uid,
+      'To' : docUID
+    });
 
   }
 

@@ -6,8 +6,8 @@ admin.initializeApp(functions.config().firebase);
 
 exports.sendNotification = functions.database.ref('Notifications/{post-id}')
 .onWrite(
-    event => {
-        var request = event.data.val();
+    (change,context) => {
+        var request = change.after.val();
         var payload = {
             data:{
                 username:"Aswin Gopinathan",
@@ -15,8 +15,10 @@ exports.sendNotification = functions.database.ref('Notifications/{post-id}')
             }
         };
 
+        console.log("Hello",request);
+
         admin.messaging().sendToDevice(
-            request.token , payload
+            request.To , payload
         )
         .then(
             function(response) {

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'about.dart';
 import 'visit_details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:medic_app_users/screens/new_entry.dart';
@@ -819,6 +820,22 @@ class _HomePageState extends State<HomePage> {
                     )
                   )
                 );
+              },
+            ),
+
+            GestureDetector(
+              child:Card(
+                child: ListTile(
+                  title: Text(
+                    "About Us"
+                  ),
+                  leading: Icon(Icons.local_hospital,color: Colors.red,),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (
+                  BuildContext context)=> About()
+                ));
               },
             ),
 

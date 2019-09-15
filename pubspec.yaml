@@ -106,6 +106,9 @@ flutter:
   - family: Patrick
     fonts:
     - asset: assets/fonts/PatrickHand-Regular.ttf
+  - family: Squada
+    fonts:
+    - asset: assets/fonts/SquadaOne-Regular.ttf
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

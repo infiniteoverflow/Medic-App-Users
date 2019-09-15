@@ -52,7 +52,62 @@ class AboutState extends State<About> {
                 image: AssetImage("assets/images/hospital/hos2.jpg"),
               ),
             ),
-          )
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(top: 10,left: 10),
+            child: Text(
+              "Address :",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontFamily: "Squada",
+                fontSize: 35
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(top: 10,left: 10),
+            child: Text(
+              "Ashirwad Nursing Home,\nLajpat Nagar , \nOpp. Katghar Kotwali\n"
+                  "Moradabad , UP",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: "Special",
+                  fontSize: 25
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(top:20,left: 10),
+            child: ListTile(
+              leading: Icon(Icons.fiber_manual_record,color: Colors.black,),
+              title: Text(
+                "A well Known Multispeciality hospital continuosly serving "
+                "moradabad and nearby vicinity",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(top:20,left: 10),
+            child: ListTile(
+              leading: Icon(Icons.fiber_manual_record,color: Colors.black,),
+              title: Text(
+                "A well Trusted hospital for all specialities",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+          ),
+
 
         ],
       )

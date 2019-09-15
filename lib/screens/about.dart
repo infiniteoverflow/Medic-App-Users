@@ -360,6 +360,15 @@ class AboutState extends State<About> {
             ),
           ),
 
+          Padding(
+            padding: EdgeInsets.only(top: 20,left: 25,right: 25),
+            child: Card(
+              child: Image(
+                image: AssetImage("assets/images/hospital/op.jpg"),
+              ),
+            ),
+          ),
+
         ],
       )
     );

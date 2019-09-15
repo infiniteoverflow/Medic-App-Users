@@ -81,6 +81,7 @@ flutter:
   - assets/images/logo2.png
   - assets/images/hospital/hos1.jpg
   - assets/images/hospital/hos2.jpg
+  - assets/images/hospital/op.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
